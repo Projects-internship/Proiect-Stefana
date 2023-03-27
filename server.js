@@ -66,7 +66,6 @@ db.connect(function(error){
 //---------GET AND POST-----------
 
 
-
 app.get('/', (req, res) => {
     res.status(200).sendFile(__dirname + '/frontend/html/index.html')
   });
@@ -94,8 +93,8 @@ app.post('/login', (req,res)=>{
 
 app.post('/logout', (req, res) => {
   res.clearCookie('isLoggedin');
-  res.redirect('/loggedout');
   console.log('User logged out');
+  res.redirect('/loggedout');
 });
 
 app.get('/loggedout',(req,res)=>{
@@ -118,7 +117,7 @@ app.get('/to-do-list', (req, res) => {
     res.status(200).sendFile(__dirname + '/frontend/html/todo.html')
 });
 
-  //-----404 response-----
+//-----404 response-----
 
 app.all('*',(req,res)=> {
     res.status(404).send('<h1>Resource not found!</h1>')
