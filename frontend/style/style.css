@@ -1,0 +1,329 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Times New Roman", Times, serif;
+}
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  /*background: #2c1c2d;*/
+  padding: 20px 100px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 99;
+}
+
+
+#header2 {
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: #472f49;
+  padding: 20px 90px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 99;
+}
+
+
+#profile
+{
+  font-family: "Arizonia", cursive;
+  font-size: 1.5rem;
+  max-height:100%;
+  color: azure;
+  user-select: none;
+  text-decoration:none;
+}
+
+#chatrooms
+{
+  font-family: "Arizonia", cursive;
+  font-size: 1.5rem;
+  max-height:100%;
+  color: azure;
+  user-select: none;
+  text-decoration:none;
+}
+
+#notes
+{
+  font-family: "Arizonia", cursive;
+  font-size: 1.5rem;
+  max-height:100%;
+  color: rgb(255, 255, 255);
+  user-select: none;
+  text-decoration:none;
+}
+
+.logo {
+  font-family: "Arizonia", cursive;
+  font-size: 3.2rem;
+  max-height:100%;
+  color: rgb(255, 255, 255);
+  user-select: none;
+}
+
+/* .nav_bar .btn-login {
+  width: 130px;
+  height: 60px;
+  background: transparent;
+  border: 2px solid rgb(255, 255, 255);
+  outline: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 2rem;
+  color: rgb(255, 255, 255);
+  font-weight: 500;
+  margin-left: 40px;
+} */
+
+/* .nav_bar .btn-login:hover {
+  background: rgb(255, 255, 255);
+  color: #000000;
+  transition: all 0.6s ease;
+} */
+
+.main1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: url("MainPage.png") no-repeat;
+  min-height: 100vh;
+}
+.main2 {
+  display: block;
+  align-items: center;
+  background: #cea5d1;
+  min-height: 100vh;
+}
+.main3{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: url("MainPage.png") no-repeat;
+  min-height: 100vh;
+}
+
+.main3 h2 {
+  font-family: "Amatic SC", cursive;
+  position: center;
+  font-size: 75px;
+  color: #fff;
+  letter-spacing: 0.3rem;
+}
+
+.wrong
+{
+  display:inline-block;
+  justify-items: center;
+  text-align: center;
+}
+
+#tryAgain {
+  font-family: "Amatic SC", cursive;
+  position: center;
+  color:#ffffff;
+  text-decoration: none;
+  font-size:45px;
+}
+
+.text {
+  position: fixed;
+  bottom: 20px;
+  text-align: center;
+  row-gap: 40px;
+}
+
+.text h2 {
+  font-family: "Amatic SC", cursive;
+  position: center;
+  font-size: 35px;
+  color: #fff;
+  letter-spacing: 0.3rem;
+}
+
+.wrapper {
+  position: relative;
+  width: 400px;
+  height: 450px;
+  background: transparent;
+  border: 2px solid azure;
+  border-radius: 35px;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 0 30px #000000;
+  display: block;
+  justify-content: center;
+  align-items: center;
+}
+
+.wrapper #my_form {
+  width: 100%;
+  padding: 50px;
+}
+
+#my_form{
+  display:inline-block;
+  align-content: center;
+  text-align:center;
+}
+
+#my_form h1 {
+  font-size: 2rem;
+  color: #fff;
+  text-align: center;
+  
+}
+
+.input-box {
+  position: relative;
+  width: 100%;
+  height: 40px;
+ 
+}
+.input-box label {
+    position:absolute;
+    left: 6px;
+    color:#fff;
+    font-weight:500px;
+    pointer-events: none;
+    bottom:5px;
+}
+
+.input-box input {
+    width:100%;
+    height:100%;
+    background: rgba(0, 0, 0, .25);
+    border: none;
+    padding:10px;
+    color:#fff;
+  
+}
+
+.icon {
+position: absolute;
+right: 8px;
+bottom: 7px;
+font-size: 1.1rem;
+color:#fff;
+}
+
+.remember-forgot {
+  width: 100%;
+  height: 40px;
+  margin: 10px;
+  color:azure;
+}
+
+
+#btn2 {
+  background: rgb(255, 255, 255);
+  border: 2px solid rgb(255, 255, 255);
+  outline: none;
+  border-radius: 2px;
+  cursor: pointer;
+  font-size: 1rem;
+  color: rgb(46, 28, 70);
+  font-weight: 525;
+  width: 45%;
+  height: 40px;
+  margin: 25px;
+}
+
+#btn2:hover{
+  background: rgb(71, 51, 97);
+  color: rgb(255, 255, 255);
+  border: 1px solid rgb(54, 39, 74);
+  transition: all 0.6s ease;
+}
+
+
+.TODO{
+  background-color: #694e6b;
+  align-content: center;
+  text-align: left;
+}
+
+
+@media (min-width:1000px){
+
+  .TODO { text-align: center;}
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+ 
+}
+
+ul li {
+  cursor: pointer;
+  position: center;
+  padding: 12px;
+  background: #cea5d1;
+  transition: 0.2s;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  font-family: "Amatic SC", cursive;
+  font-size: 2rem;
+  font-weight:200;
+  list-style-type: none;
+}
+
+ul li.checked {
+  background: #aa88ad;
+  color: #fff;
+  text-decoration: line-through;
+}
+
+
+#inputToDo {
+  width:60%;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.866);
+  border: none;
+  padding:10px;
+  margin:20px;
+  color:rgb(46, 28, 70);
+  font-size: 1rem;
+}
+
+@media (min-width:1000px){
+
+  #inputToDo { width:80%;}
+}
+
+
+#btn3 {
+  background: rgb(255, 255, 255);
+  border: 2px solid rgb(255, 255, 255);
+  outline: none;
+  border-radius: 2px;
+  cursor: pointer;
+  font-size: 1rem;
+  color: rgb(46, 28, 70);
+  font-weight: 525;
+  width: 80px;
+  height: 40px;
+  margin: 25px;
+}
+
+.TODO h1 {
+  font-family: "Amatic SC", cursive;
+  position: center;
+  font-size: 2.5rem;
+  color: #fff;
+  letter-spacing: 0.3rem;
+  padding:20px;
+}
+
+

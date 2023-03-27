@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DawnAir ChatApp</title>
+    <link rel="stylesheet" type="text/css" href="profile-style.css"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Amatic+SC&family=Arizonia&display=swap"
+      rel="stylesheet"
+    />
+</head>
+<body>
+    <div class="header" id="header2">
+        <h1 class="logo">DawnAir</h1>
+            <a href="/profile" class="nav-items" id="profile">
+                Profile
+                </a>
+            <a href="/chatrooms" class="nav-items" id="chatrooms">
+               ChatRooms
+            </a>
+            <a href="/to-do-list" class="nav-items" id="notes">
+                To-Do
+                </a>
+      </div>
+    <div class="main">
+        <div class="profile-wrapper">
+            <h1>UserName</h1>
+            <ul>
+                <li contenteditable="true">email</li>
+                <li>position</li>
+                <li contenteditable="true">phone</li>
+                <li contenteditable="true">birthday</li>
+                <li><button onclick="logout()" method="POST" id="logout_btn">Log out</button></li>
+            </ul>
+        </div>
+            <div class="profile-about">
+                <p contenteditable="true"> ABOUT ABOUT ABOUT ABOUT ABOUT ABOUT ABOUT ABOUT ABOUT ABOUT ABOUT ABOUT ABOUT ABOUT ABOUT ABOUT ABOUT </p>
+            </div>
+    </div>
+    <script src="profile-script.js"></script>
+    <script src="/server.js"></script>
+</body>
+</html>
