@@ -71,16 +71,15 @@
 }
 
 
-.profile-wrapper h1 {
-  font-family: "Amatic SC", cursive;
-  font-size: 3.5rem;
+.username {
+  font-size: 2rem;
   max-height:100%;
   color: azure;
   user-select: none;
   text-decoration:none;
   text-align: center;
   margin-top:40px;
-  letter-spacing: 5px;
+  letter-spacing: 3px;
 }
 
 ul li {
@@ -114,7 +113,6 @@ ul li {
     .profile-about {margin-left: 340px;}
   }
 
-
   .profile-about p{
     color:#fff;
     text-align: center;
@@ -135,6 +133,7 @@ ul li {
     height: 40px;
     position:bottom;
   }
+  
   #logout_btn:hover{
     background: rgb(71, 51, 97);
     color: rgb(255, 255, 255);

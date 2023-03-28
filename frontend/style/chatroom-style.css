@@ -18,8 +18,7 @@
     z-index: 99;
   }
 
-  #profile
-{
+  #profile{
   font-family: "Arizonia", cursive;
   font-size: 1.5rem;
   max-height:100%;
@@ -28,8 +27,7 @@
   text-decoration:none;
 }
 
-#chatrooms
-{
+#chatrooms{
   font-family: "Arizonia", cursive;
   font-size: 1.5rem;
   max-height:100%;
@@ -38,8 +36,7 @@
   text-decoration:none;
 }
 
-#notes
-{
+#notes{
   font-family: "Arizonia", cursive;
   font-size: 1.5rem;
   max-height:100%;
@@ -64,7 +61,6 @@
     display: flex;
 }
 
-
 .container-chats{
     background:#362438;
     align-content: center;
@@ -79,14 +75,14 @@
 @media (min-width:750px){
 
     .container-chats { max-width: 50vh;}
-  }
+}
 
 ul {
     margin: 0 auto;
     padding: 0;
-  }
+}
   
-  ul li {
+ul li {
     cursor: pointer;
     position: left;
     padding: 12px;
@@ -103,7 +99,7 @@ ul {
     list-style-type: none;
     min-width: 20vh;
     margin:5px;
-  }
+}
 
   #chatSearch {
   width:80%;
@@ -114,28 +110,27 @@ ul {
   margin:20px;
   color:rgb(46, 28, 70);
   font-size: 1rem;
-  }
+}
   
-  .mainchat{
-    display:inline-block;
-  
-  }
+.mainchat{
+    display:inline-block; 
+  } 
 
-  .content{
+.content{
     display:flex;
     margin:auto;
     text-align: center;
     justify-content: center;
   }
 
-  .placeholder-msg{
+.placeholder-msg{
     justify-content: center;
     text-align: center;
     margin-left: 400px;
     margin:auto;
-
   }
-  .placeholder-msg h2{
+
+.placeholder-msg h2{
     color:#694e6b;
     font-family: "Arizonia", cursive;
     font-size: 3.5rem;
@@ -146,17 +141,17 @@ ul {
     justify-content: center;
   }
 
-  h2:hover{
+h2:hover{
     color:#472f49;
     transition: all 0.3s ease;
   }
 
-  .chatroom{
+.chatroom{
     display:flex;
     text-align:center;
   }
 
-  input {
+input {
     width:300px;
     height: 30px;
     background: white;
@@ -166,21 +161,21 @@ ul {
     color:#362438;
     margin-top:35px;
     margin-left: 110px;
-  
-  }
-  @media (min-width:750px){
-
-    input { width: 500px;}
-  }
-  @media (min-width:1000px){
-
-    input { width: 700px;}
   }
 
-  @media (min-width:1200px){
+@media (min-width:750px){
 
-    input { width: 900px;}
-  }
+  input { width: 500px;}
+ }
+
+@media (min-width:1000px){
+
+  input { width: 700px;}
+}
+
+@media (min-width:1200px){
+  input { width: 900px;}
+}
 
 #mybtn {   
     background: rgb(255, 255, 255);
@@ -198,7 +193,7 @@ ul {
     position:bottom;
   }
 
-  #messages {
+#messages {
     margin-bottom:20px;
     margin-left: 110px;
     list-style: none;
@@ -207,11 +202,10 @@ ul {
     padding: 0;
   }
 
-  #messages li{
+#messages li{
     color:#362438;
     font-size:25px;
     background-color: #cea5d1;
     font-family: 'Kalam', cursive;
     font-weight:550;
   }
-  

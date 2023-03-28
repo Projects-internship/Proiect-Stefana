@@ -10,14 +10,12 @@
   top: 0;
   left: 0;
   width: 100%;
-  /*background: #2c1c2d;*/
   padding: 20px 100px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   z-index: 99;
 }
-
 
 #header2 {
   position: sticky;
@@ -31,7 +29,6 @@
   align-items: center;
   z-index: 99;
 }
-
 
 #profile
 {
@@ -70,26 +67,6 @@
   color: rgb(255, 255, 255);
   user-select: none;
 }
-
-/* .nav_bar .btn-login {
-  width: 130px;
-  height: 60px;
-  background: transparent;
-  border: 2px solid rgb(255, 255, 255);
-  outline: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 2rem;
-  color: rgb(255, 255, 255);
-  font-weight: 500;
-  margin-left: 40px;
-} */
-
-/* .nav_bar .btn-login:hover {
-  background: rgb(255, 255, 255);
-  color: #000000;
-  transition: all 0.6s ease;
-} */
 
 .main1 {
   display: flex;
@@ -222,7 +199,6 @@ color:#fff;
   color:azure;
 }
 
-
 #btn2 {
   background: rgb(255, 255, 255);
   border: 2px solid rgb(255, 255, 255);
@@ -244,13 +220,11 @@ color:#fff;
   transition: all 0.6s ease;
 }
 
-
 .TODO{
   background-color: #694e6b;
   align-content: center;
   text-align: left;
 }
-
 
 @media (min-width:1000px){
 
@@ -285,7 +259,6 @@ ul li.checked {
   text-decoration: line-through;
 }
 
-
 #inputToDo {
   width:60%;
   height: 40px;
@@ -301,7 +274,6 @@ ul li.checked {
 
   #inputToDo { width:80%;}
 }
-
 
 #btn3 {
   background: rgb(255, 255, 255);

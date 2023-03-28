@@ -42,7 +42,7 @@ function addNewToDo(){
     }
   }
 
-  document.querySelector("#inputToDo").value = "";    
+document.querySelector("#inputToDo").value = "";    
 
 // delete item from list
 const closeButton = document.getElementsByClassName("closeButton");
