@@ -4,7 +4,6 @@ const app= express();
 const server= http.createServer(app);
 const dotenv = require('dotenv');
  
-
 const path = require('path');
 const mysql= require('mysql')
 
@@ -15,17 +14,6 @@ const bodyParser= require('body-parser');
 app.use(bodyParser.json());
 
 const cors=require('cors');
-
-//--------socket.io--------
-
-
-io.on('connection', (socket) => {
-  socket.on('chat message', (msg) => {
-    io.emit('chat message', msg);
-  });
-});
-
-
 
 //--------------------
 server.listen(5000,() => {
@@ -43,8 +31,14 @@ app.use(express.urlencoded({extended: true}));
 app.use(express.json());;
 app.use(cors());
 
-//-------DATABASE-------
+//---socket.io
+io.on('connection', (socket) => {
+  socket.on('chat message', (msg) => {
+    io.emit('chat message', msg);
+  });
+});
 
+//-------DATABASE-------
   const  db = mysql.createConnection({
     host: 'localhost',
     port: 3306,
@@ -64,8 +58,6 @@ db.connect(function(error){
 })
 
 //---------GET AND POST-----------
-
-
 app.get('/', (req, res) => {
     res.status(200).sendFile(__dirname + '/frontend/html/index.html')
   });
@@ -75,15 +67,13 @@ app.post('/login', (req,res)=>{
   const password=req.body.password;
   const email= req.body.email;
 
-
   db.query("SELECT * FROM `users` WHERE username = ? AND password = ? AND email = ?",
   [username, password,email],
   (err,result)=>{
     if(result.length > 0){
-      res.setHeader('Set-Cookie', 'isLoggedin=true');
-      //res.cookie("cookie name", cookievalue, ) // !!!!!
+      res.cookie('userCookie', username);
       res.redirect('/chatrooms');
-      console.log('User logged in!');
+      console.log(`User logged in!`);
       } 
       else {
         res.redirect('/wrongUser');
@@ -92,9 +82,10 @@ app.post('/login', (req,res)=>{
 })
 
 app.post('/logout', (req, res) => {
-  res.clearCookie('isLoggedin');
-  console.log('User logged out');
+  res.clearCookie('userCookie');  
+  console.log('User logged out!');
   res.redirect('/loggedout');
+
 });
 
 app.get('/loggedout',(req,res)=>{
@@ -116,6 +107,22 @@ app.get('/profile', (req, res) => {
 app.get('/to-do-list', (req, res) => {
     res.status(200).sendFile(__dirname + '/frontend/html/todo.html')
 });
+
+//-----------!!!
+app.get('/get-user-data',(req,res)=>{
+  const user= document.cookie
+    .split("; ")
+    .find((row) => row.startsWith("userCookie="))
+    ?.split("=")[1];
+
+  db.query("SELECT * FROM `users` WHERE `username` = ?",
+  [user],
+  (err,result)=>{
+    if(result.length > 0){
+        console.log(result);
+      }
+  })
+})
 
 //-----404 response-----
 
