@@ -6,8 +6,8 @@ async function logout(url = "/logout") {
     }
 }
 
-    //------------username on user profile----------
-    var user = document.cookie
+//------------username on user profile----------
+    const user = document.cookie
         .split("; ")
         .find((row) => row.startsWith("userCookie="))
         ?.split("=")[1];
@@ -15,14 +15,38 @@ async function logout(url = "/logout") {
     const username = document.querySelector(".username");
     username.innerHTML = user;
 
-// const logout_btn = document.getElementById('logout_btn');
+//------------data in user profile-----------------
 
-// logout_btn.addEventListener('click', () => {
-//     fetch('/logout')
-//         .then(() => {
-//             // The server should automatically redirect to the new page.
-//         })
-//         .catch((error) => {
-//             console.error('Failed to fetch URL:', error);
-//         });
-// });
+async function getData(){
+    let url='/user-data';
+    const response= await fetch(url,
+        {method:"POST",
+        headers: 
+        {'Accept': '*',
+        'Content-Type': 'application/json'},
+        body: JSON.stringify( 
+            { 
+              username: username,
+              email: email,
+              position: position,
+              birthday: birthday
+            }
+        ) 
+    })
+    const userJSON = await response.json();
+    //console.log(userJSON);
+
+     const birthdayList= document.querySelector("#birthday");
+     birthdayList.innerHTML=userJSON.birthday;
+
+     const emailList= document.querySelector("#email");
+     emailList.innerHTML=userJSON.email;
+
+     const positionList= document.querySelector("#position");
+     positionList.innerHTML=userJSON.position;
+
+     const phoneList= document.querySelector("#phone");
+     phoneList.innerHTML=userJSON.phone;
+
+}
+

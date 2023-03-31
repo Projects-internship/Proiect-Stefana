@@ -18,7 +18,7 @@
     z-index: 99;
   }
 
-  #profile
+#profile
 {
   font-family: "Arizonia", cursive;
   font-size: 1.5rem;
@@ -82,7 +82,7 @@
   letter-spacing: 3px;
 }
 
-ul li {
+  ul li {
     text-align:center;
     padding: 12px;
     color:rgb(255, 255, 255);
@@ -96,6 +96,26 @@ ul li {
     list-style-type: none;
     min-width: 20vh;
     margin:5px;
+  }
+
+  #email{
+    font-size:15px;
+    font-family:'Times New Roman', Times, serif;
+  }
+
+  #birthday{
+    font-size:15px;
+    font-family:'Times New Roman', Times, serif;
+  }
+
+  #position{
+    font-size:15px;
+    font-family:'Times New Roman', Times, serif;
+  }
+  
+  #phone{
+    font-size:15px;
+    font-family:'Times New Roman', Times, serif;
   }
 
   .profile-about{

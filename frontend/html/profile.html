@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>DawnAir ChatApp</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <link rel="stylesheet" type="text/css" href="profile-style.css"/>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -16,7 +17,7 @@
 <body>
     <div class="header" id="header2">
         <h1 class="logo">DawnAir</h1>
-            <a href="/profile" class="nav-items" id="profile">
+            <a href="/profile" onclick="" class="nav-items" id="profile">
                 Profile
                 </a>
             <a href="/chatrooms" class="nav-items" id="chatrooms">
@@ -33,6 +34,10 @@
         </div>
             <ul id="info"> 
                 <li><button onclick="logout()" id="logout_btn">Log out</button></li>
+                <li id="email"></li>
+                <li id="birthday"></li>
+                <li id="position"></li>
+                <li id="phone"></li>
             </ul>
         </div>
             <div class="profile-about">
@@ -40,5 +45,12 @@
             </div>
     </div>
     <script src="profile-script.js"></script>
+    
 </body>
 </html>
+
+<script>
+        $(document).ready(function(){
+            getData();
+        });
+</script>

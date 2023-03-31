@@ -55,8 +55,10 @@ function chatroom(){
     ?.split("=")[1];
 
     socket.on('chat message', function(msg){
+        console.log(msg);
         const newMsg=document.createElement('li');
-        newMsg.textContent=`${user}: ${msg}`;  ///DE INTREBAT 
+        // newMsg.textContent=`${user}: ${msg}`;  ///DE INTREBAT 
+        newMsg.textContent=`${msg.owner}: ${msg.message}`; 
         const messages=document.getElementById('messages');
         messages.appendChild(newMsg);
         window.scrollTo(0,document.body.scrollHeight);
