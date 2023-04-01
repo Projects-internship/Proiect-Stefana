@@ -1,48 +1,25 @@
 //-------------get user Chatrooms---------
 async function getChatrooms(){
-    let url='/get-user-chatrooms';
-    const response= await fetch(url,
-        {method:"POST",
-        headers: 
-        {'Accept': '*',
-        'Content-Type': 'application/json'},
-        body: JSON.stringify( 
-            { 
-              groupID: groupID, //aici imi spune ca groupID (si daca sterg, si groupname) sunt undefined ca si eroare (uncaught promise)
-              groupname: groupname
-            }
-        ) 
-    })
-    
+    const groupID = 1; // or whichever group ID you want to query for
+    const groupName = 'My Group'; // or whichever group name you want to query for
+    const url = '/get-user-chatrooms';
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Accept': '*',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        groupID: groupID,
+        groupname: groupName
+      })
+    });
     const chatroomsJSON = await response.json();
     console.log(chatroomsJSON);
-
+  }
     // const list = document.querySelector("#chats");
     // const chatroom= document.createElement("li");
     // list.appendChild(chatroom);
-}
-
-// asta e acelasi cod de pe pagina de profile-script.js unde merge, dar aici imi afiseaza eroare ca si mai sus, doar ca pentru username
-
-// async function getChatrooms(){
-//     let url='/get-user-data';
-//     const response= await fetch(url,
-//         {method:"POST",
-//         headers: 
-//         {'Accept': '*',
-//         'Content-Type': 'application/json'},
-//         body: JSON.stringify( 
-//             { 
-//               username: username,
-//               email: email,
-//               position: position,
-//               birthday: birthday
-//             }
-//         ) 
-//     })
-//     const userJSON = await response.json();
-//     console.log(userJSON);
-// }
 
 
 //------CHATROOM LISTS------
