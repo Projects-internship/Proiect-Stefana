@@ -1,7 +1,5 @@
 //-------------get user Chatrooms---------
 async function getChatrooms(){
-    const groupID = 1; // or whichever group ID you want to query for
-    const groupName = 'My Group'; // or whichever group name you want to query for
     const url = '/get-user-chatrooms';
     const response = await fetch(url, {
       method: 'POST',
