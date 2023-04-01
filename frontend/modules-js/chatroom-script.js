@@ -1,4 +1,4 @@
-
+const socket=io();
 //-------------get user Chatrooms---------
 async function getChatrooms(){
     const url = '/get-user-chatrooms';
@@ -57,7 +57,6 @@ async function getChatrooms(){
 }
 
 
-
 //------CHATROOM LISTS------
 const list = document.getElementsByTagName("li");
 for (let i = 0; i < list.length; i++) {
@@ -85,8 +84,6 @@ for (let i = 0; i < list.length; i++) {
 }
 
 //--send messages w/ socket.io-----
-
-const socket=io();
 
 // function chatroom(){
 //      const content=document.querySelector('.content')
