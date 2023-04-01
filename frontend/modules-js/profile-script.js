@@ -18,7 +18,7 @@ async function logout(url = "/logout") {
 //------------data in user profile-----------------
 
 async function getData(){
-    let url='/user-data';
+    let url='/get-user-data';
     const response= await fetch(url,
         {method:"POST",
         headers: 
@@ -34,19 +34,18 @@ async function getData(){
         ) 
     })
     const userJSON = await response.json();
-    //console.log(userJSON);
 
-     const birthdayList= document.querySelector("#birthday");
-     birthdayList.innerHTML=userJSON.birthday;
+    const birthdayList= document.querySelector("#birthday");
+    birthdayList.innerHTML=userJSON.birthday;
 
-     const emailList= document.querySelector("#email");
-     emailList.innerHTML=userJSON.email;
+    const emailList= document.querySelector("#email");
+    emailList.innerHTML=userJSON.email;
 
-     const positionList= document.querySelector("#position");
-     positionList.innerHTML=userJSON.position;
+    const positionList= document.querySelector("#position");
+    positionList.innerHTML=userJSON.position;
 
-     const phoneList= document.querySelector("#phone");
-     phoneList.innerHTML=userJSON.phone;
+    const phoneList= document.querySelector("#phone");
+    phoneList.innerHTML=userJSON.phone;
 
 }
 

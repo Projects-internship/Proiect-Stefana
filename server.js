@@ -6,16 +6,19 @@ const path = require('path');
 const mysql = require('mysql');
 const bodyParser = require('body-parser');
 const CookieParser = require('cookie-parser');
+const cors = require('cors');
+const { Server } = require('socket.io');
+
 const app = express();
 const server = http.createServer(app);
-const { Server } = require('socket.io');
 const io = new Server(server);
 app.use(bodyParser.json());
 app.use(CookieParser());
 
-const cors = require('cors');
+
 
 //--------------------
+
 server.listen(5000, () => {
   console.log('listening on: 5000...')
 });
@@ -46,7 +49,18 @@ io.on('connection', (socket) => {
 });
 
 //-------DATABASE-------
-const db = mysql.createConnection({
+
+//Initial aveam o conexiune creata, apoi am facut switch la pool
+
+// const db = mysql.createConnection({
+//   host: 'localhost',
+//   port: 3306,
+//   database: 'dawnair',
+//   user: 'root',
+//   password: ''
+// });
+
+const db = mysql.createPool({
   host: 'localhost',
   port: 3306,
   database: 'dawnair',
@@ -54,14 +68,14 @@ const db = mysql.createConnection({
   password: ''
 });
 
-db.connect(function (error) {
-  if (error) {
-    console.log(error);
-  }
-  else {
-    console.log("Connection to DB: Sucess!")
-  }
-})
+// db.connect(function (error) {
+//   if (error) {
+//     console.log(error);
+//   }
+//   else {
+//     console.log("Connection to DB: Sucess!")
+//   }
+// })
 
 //---------GET AND POST-----------
 app.get('/', (req, res) => {
@@ -118,14 +132,10 @@ app.get('/to-do-list', (req, res) => {
   res.status(200).sendFile(__dirname + '/frontend/html/todo.html')
 });
 
-
-app.post('/user-data', async (req,res)=>{
-  // var cookies = cookie.parse(socket.handshake.headers.cookie)
-  // const user = cookies.userCookie;
-
+app.post('/get-user-data', async (req,res)=>{
   const user= req.cookies.userCookie
 
-  db.query("SELECT user_id, username, email,phone, position,birthday FROM `users` WHERE username = ? LIMIT 1", [user],
+  db.query("SELECT user_id, username, email, phone, position, birthday FROM `users` WHERE username = ? LIMIT 1", [user],
         (err,result)=>{
           if(result.length>0){
             res.json({
@@ -142,6 +152,48 @@ app.post('/user-data', async (req,res)=>{
           }
         })
 })
+
+//forma mai simplificata, hardcodata pentru grupul cu id-ul nr 1
+
+app.post('/get-user-chatrooms', async(req,res)=>{  
+  
+  const group= 1;
+  
+  db.query("SELECT group_id, groupname FROM `groupchat` WHERE group_id= ? LIMIT 1", [group],
+          (err,result)=>{
+            if(result.length>0){
+              res.json({
+                groupID: result[0].group_id,
+                groupname: result[0].groupname
+              })
+            }
+            else {
+              res.json({error: err})
+            }
+          })
+  
+  })
+
+//Asta ar fi codul pe care eu as fi vrut sa il rulez, ma folosesc de 3 tabele, de users, groupchats si cel de jonctiune
+//In mysql in xampp, query-ul ruleaza bine si returneaza grupurile de chat in care se afla user-ul
+
+// app.post('/get-user-chatrooms', async(req,res)=>{  
+// const user= req.cookies.userCookie;
+
+// db.query("SELECT DISTINCT g.group_id g.groupname FROM `groupchat` g, `users` u, `user_in_group` ug WHERE u.user_id=ug.user_id AND u.username= ? LIMIT 1", [user],
+//         (err,result)=>{
+//           if(result.length>0){
+//             res.json({
+//               groupID: result[0].group_id,
+//               groupname: result[0].groupname
+//             })
+//           }
+//           else {
+//             res.json({error: err})
+//           }
+//         })
+
+// })
 
 
 //-----404 response-----
