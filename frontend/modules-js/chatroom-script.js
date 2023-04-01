@@ -1,3 +1,50 @@
+//-------------get user Chatrooms---------
+async function getChatrooms(){
+    let url='/get-user-chatrooms';
+    const response= await fetch(url,
+        {method:"POST",
+        headers: 
+        {'Accept': '*',
+        'Content-Type': 'application/json'},
+        body: JSON.stringify( 
+            { 
+              groupID: groupID, //aici imi spune ca groupID (si daca sterg, si groupname) sunt undefined ca si eroare (uncaught promise)
+              groupname: groupname
+            }
+        ) 
+    })
+    
+    const chatroomsJSON = await response.json();
+    console.log(chatroomsJSON);
+
+    // const list = document.querySelector("#chats");
+    // const chatroom= document.createElement("li");
+    // list.appendChild(chatroom);
+}
+
+// asta e acelasi cod de pe pagina de profile-script.js unde merge, dar aici imi afiseaza eroare ca si mai sus, doar ca pentru username
+
+// async function getChatrooms(){
+//     let url='/get-user-data';
+//     const response= await fetch(url,
+//         {method:"POST",
+//         headers: 
+//         {'Accept': '*',
+//         'Content-Type': 'application/json'},
+//         body: JSON.stringify( 
+//             { 
+//               username: username,
+//               email: email,
+//               position: position,
+//               birthday: birthday
+//             }
+//         ) 
+//     })
+//     const userJSON = await response.json();
+//     console.log(userJSON);
+// }
+
+
 //------CHATROOM LISTS------
 const list = document.getElementsByTagName("li");
 for (let i = 0; i < list.length; i++) {
@@ -57,7 +104,6 @@ function chatroom(){
     socket.on('chat message', function(msg){
         console.log(msg);
         const newMsg=document.createElement('li');
-        // newMsg.textContent=`${user}: ${msg}`;  ///DE INTREBAT 
         newMsg.textContent=`${msg.owner}: ${msg.message}`; 
         const messages=document.getElementById('messages');
         messages.appendChild(newMsg);
@@ -65,11 +111,3 @@ function chatroom(){
     }
     )
 }
-//-------------------
-
-
-
-    
-
-
-
