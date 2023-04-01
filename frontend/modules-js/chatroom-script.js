@@ -18,18 +18,26 @@ async function getChatrooms(){
     chatroomsJSON.forEach(chatroom => {
         const listItem = document.createElement('li');
         listItem.textContent = chatroom.groupname;
-        listItem.onclick = function chatroom() {
+        listItem.onclick = function Chatroom() {
+
             const roomName = chatroom.groupname; 
             const content = document.querySelector('.content');
+
+            //check if the content has been removed, if not remove it
             if (content) {
               content.remove();
             }
             const formCheck = document.querySelector("#myform");
             const buttonCheck = document.querySelector("#mybtn");
+
+            //check if the form and button are there, if they are, remove them
             if (formCheck) {
               formCheck.remove();
               buttonCheck.remove();
             }
+
+            //css+html elements in js
+
             const form = document.createElement("form");
             form.setAttribute('id', 'myform');
             const input = document.createElement("input");
@@ -40,18 +48,35 @@ async function getChatrooms(){
             document.querySelector(".chatroom").appendChild(form).appendChild(input);
             document.querySelector(".chatroom").appendChild(form).appendChild(button);
           
+            //event listener for when senging a message + what room you are sending it to
+
             form.addEventListener('submit', function (e) {
                 e.preventDefault();
                 if (input.value) {
-                  console.log('Sending message:', input.value);
+                console.log('Sending message:', input.value);
+                console.log('Room name:', roomName);
                   socket.emit('chat message', { message: input.value, roomName });
                   input.value = '';
                 }
               });
           
-            // join the appropriate room
+            // join a room
             socket.emit('join room', roomName);
+
+            socket.on('chat message', function(msg){
+                console.log(msg);
+                const newMsg=document.createElement('li');
+                newMsg.textContent=`${msg.owner}: ${msg.message}`; 
+                const messages=document.getElementById('messages');
+                messages.appendChild(newMsg);
+                window.scrollTo(0,document.body.scrollHeight);
+            })
+
+            //disconnect ;-;
+            socket.on('disconnect');
           }
+
+        
         chatroomsList.appendChild(listItem);
     });
 }
@@ -83,6 +108,8 @@ for (let i = 0; i < list.length; i++) {
   list[i].appendChild(btn2).innerText=" ⋮ ";
 }
 
+
+///----old without room version of it--
 //--send messages w/ socket.io-----
 
 // function chatroom(){
@@ -111,13 +138,13 @@ for (let i = 0; i < list.length; i++) {
 //     .find((row) => row.startsWith("userCookie="))
 //     ?.split("=")[1];
 
-//     socket.on('chat message', function(msg){
-//         console.log(msg);
-//         const newMsg=document.createElement('li');
-//         newMsg.textContent=`${msg.owner}: ${msg.message}`; 
-//         const messages=document.getElementById('messages');
-//         messages.appendChild(newMsg);
-//         window.scrollTo(0,document.body.scrollHeight);
-//     }
-//     )
+// socket.on('chat message', function(msg){
+//     console.log(msg);
+//     const newMsg=document.createElement('li');
+//     newMsg.textContent=`${msg.owner}: ${msg.message}`; 
+//     const messages=document.getElementById('messages');
+//     messages.appendChild(newMsg);
+//     window.scrollTo(0,document.body.scrollHeight);
+// })
+
 // }

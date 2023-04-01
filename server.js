@@ -30,47 +30,40 @@ app.use(cors());
 const chatRooms = {};
 
 io.on('connection', (socket) => {
+  let currentRoom = null;
   const cookies = cookie.parse(socket.handshake.headers.cookie);
 
-//---join room
+  // joining
   socket.on('join room', (roomName) => {
     if (!chatRooms[roomName]) {
       chatRooms[roomName] = [];
     }
+    if (currentRoom !== null) {
+      const index = chatRooms[currentRoom].indexOf(socket);
+      if (index !== -1) {
+        chatRooms[currentRoom].splice(index, 1);
+      }
+      socket.leave(currentRoom);
+    }
     chatRooms[roomName].push(socket);
     socket.join(roomName);
+    currentRoom = roomName;
   });
 
-//---send messages
-  socket.on('chat message', ({ message, timestamp, roomName }) => {
+  // sending the message
+  socket.on('chat message', ({ message, timestamp }) => {
     const owner = cookies.userCookie;
     timestamp = new Date().toISOString();
     const messageObj = { message, owner, timestamp };
-
-//console log-uri test
-    console.log('Received message:', message);
-    console.log('Owner:', owner);
-    console.log('Timestamp:', timestamp);
-    console.log('Room name:', roomName); //spune roomname undefined cand scriu un mesaj:
-
-//if there is a chatroom-> emit message
-    if (chatRooms[roomName]) { 
-      chatRooms[roomName].forEach((socket) => {
+    if (chatRooms[currentRoom]) {
+      chatRooms[currentRoom].forEach((socket) => {
         socket.emit('chat message', messageObj);
       });
     }
   });
-
-//disconnect part
-  socket.on('disconnect', () => {
-    for (const roomName in chatRooms) {
-      const index = chatRooms[roomName].indexOf(socket);
-      if (index !== -1) {
-        chatRooms[roomName].splice(index, 1);
-      }
-    }
-  });
+  
 });
+
 
 
 
@@ -85,14 +78,6 @@ const db = mysql.createConnection({
   user: 'root',
   password: ''
 });
-
-// const db = mysql.createPool({
-//   host: 'localhost',
-//   port: 3306,
-//   database: 'dawnair',
-//   user: 'root',
-//   password: ''
-// });
 
 db.connect(function (error) {
   if (error) {
