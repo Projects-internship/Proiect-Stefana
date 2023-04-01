@@ -27,18 +27,52 @@ app.use(express.json());;
 app.use(cors());
 
 //---socket.io
+const chatRooms = {};
+
 io.on('connection', (socket) => {
-  var cookies = cookie.parse(socket.handshake.headers.cookie)
-      
-  socket.on('chat message', (msg) => {
-    let aux = {
-      message: msg,
-      owner: cookies.userCookie,
-      timestamp: new Date().toISOString()
+  const cookies = cookie.parse(socket.handshake.headers.cookie);
+
+//---join room
+  socket.on('join room', (roomName) => {
+    if (!chatRooms[roomName]) {
+      chatRooms[roomName] = [];
     }
-    io.emit('chat message', aux);
+    chatRooms[roomName].push(socket);
+    socket.join(roomName);
+  });
+
+//---send messages
+  socket.on('chat message', ({ message, timestamp, roomName }) => {
+    const owner = cookies.userCookie;
+    timestamp = new Date().toISOString();
+    const messageObj = { message, owner, timestamp };
+
+//console log-uri test
+    console.log('Received message:', message);
+    console.log('Owner:', owner);
+    console.log('Timestamp:', timestamp);
+    console.log('Room name:', roomName); //spune roomname undefined cand scriu un mesaj:
+
+//if there is a chatroom-> emit message
+    if (chatRooms[roomName]) { 
+      chatRooms[roomName].forEach((socket) => {
+        socket.emit('chat message', messageObj);
+      });
+    }
+  });
+
+//disconnect part
+  socket.on('disconnect', () => {
+    for (const roomName in chatRooms) {
+      const index = chatRooms[roomName].indexOf(socket);
+      if (index !== -1) {
+        chatRooms[roomName].splice(index, 1);
+      }
+    }
   });
 });
+
+
 
 //-------DATABASE-------
 

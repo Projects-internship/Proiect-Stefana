@@ -1,3 +1,4 @@
+
 //-------------get user Chatrooms---------
 async function getChatrooms(){
     const url = '/get-user-chatrooms';
@@ -7,17 +8,54 @@ async function getChatrooms(){
         'Accept': '*',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({
-        groupID: groupID,
-        groupname: groupName
-      })
+      body: JSON.stringify({})
     });
     const chatroomsJSON = await response.json();
     console.log(chatroomsJSON);
-  }
-    // const list = document.querySelector("#chats");
-    // const chatroom= document.createElement("li");
-    // list.appendChild(chatroom);
+
+    const chatroomsList = document.querySelector("#chats");
+    chatroomsList.innerHTML = '';
+    chatroomsJSON.forEach(chatroom => {
+        const listItem = document.createElement('li');
+        listItem.textContent = chatroom.groupname;
+        listItem.onclick = function chatroom() {
+            const roomName = chatroom.groupname; 
+            const content = document.querySelector('.content');
+            if (content) {
+              content.remove();
+            }
+            const formCheck = document.querySelector("#myform");
+            const buttonCheck = document.querySelector("#mybtn");
+            if (formCheck) {
+              formCheck.remove();
+              buttonCheck.remove();
+            }
+            const form = document.createElement("form");
+            form.setAttribute('id', 'myform');
+            const input = document.createElement("input");
+            const button = document.createElement("button");
+            button.setAttribute('id', 'mybtn');
+            button.innerHTML = "Send!";
+            button.type = "submit";
+            document.querySelector(".chatroom").appendChild(form).appendChild(input);
+            document.querySelector(".chatroom").appendChild(form).appendChild(button);
+          
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+                if (input.value) {
+                  console.log('Sending message:', input.value);
+                  socket.emit('chat message', { message: input.value, roomName });
+                  input.value = '';
+                }
+              });
+          
+            // join the appropriate room
+            socket.emit('join room', roomName);
+          }
+        chatroomsList.appendChild(listItem);
+    });
+}
+
 
 
 //------CHATROOM LISTS------
@@ -50,39 +88,39 @@ for (let i = 0; i < list.length; i++) {
 
 const socket=io();
 
-function chatroom(){
-     const content=document.querySelector('.content')
-     content.remove();
-     const form= document.createElement("form");
-     form.setAttribute('id','myform');
-     const input=document.createElement("input");
-     const button=document.createElement("button");
-     button.setAttribute('id','mybtn');
-     button.innerHTML="Send!";
-     button.type="submit";
-     document.querySelector(".chatroom").appendChild(form).appendChild(input);
-     document.querySelector(".chatroom").appendChild(form).appendChild(button);
+// function chatroom(){
+//      const content=document.querySelector('.content')
+//      content.remove();
+//      const form= document.createElement("form");
+//      form.setAttribute('id','myform');
+//      const input=document.createElement("input");
+//      const button=document.createElement("button");
+//      button.setAttribute('id','mybtn');
+//      button.innerHTML="Send!";
+//      button.type="submit";
+//      document.querySelector(".chatroom").appendChild(form).appendChild(input);
+//      document.querySelector(".chatroom").appendChild(form).appendChild(button);
 
-     form.addEventListener('submit',function(e){
-        e.preventDefault();
-        if(input.value){
-            socket.emit('chat message', input.value);
-            input.value = '';
-        }
-    })
-//-------username for messages-------
-    var user= document.cookie
-    .split("; ")
-    .find((row) => row.startsWith("userCookie="))
-    ?.split("=")[1];
+//      form.addEventListener('submit',function(e){
+//         e.preventDefault();
+//         if(input.value){
+//             socket.emit('chat message', input.value);
+//             input.value = '';
+//         }
+//     })
+// //-------username for messages-------
+//     var user= document.cookie
+//     .split("; ")
+//     .find((row) => row.startsWith("userCookie="))
+//     ?.split("=")[1];
 
-    socket.on('chat message', function(msg){
-        console.log(msg);
-        const newMsg=document.createElement('li');
-        newMsg.textContent=`${msg.owner}: ${msg.message}`; 
-        const messages=document.getElementById('messages');
-        messages.appendChild(newMsg);
-        window.scrollTo(0,document.body.scrollHeight);
-    }
-    )
-}
+//     socket.on('chat message', function(msg){
+//         console.log(msg);
+//         const newMsg=document.createElement('li');
+//         newMsg.textContent=`${msg.owner}: ${msg.message}`; 
+//         const messages=document.getElementById('messages');
+//         messages.appendChild(newMsg);
+//         window.scrollTo(0,document.body.scrollHeight);
+//     }
+//     )
+// }
