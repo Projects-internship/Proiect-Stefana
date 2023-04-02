@@ -35,9 +35,11 @@ io.on('connection', (socket) => {
 
   // joining
   socket.on('join room', (roomName) => {
+
     if (!chatRooms[roomName]) {
       chatRooms[roomName] = [];
     }
+
     if (currentRoom !== null) {
       const index = chatRooms[currentRoom].indexOf(socket);
       if (index !== -1) {
@@ -45,10 +47,13 @@ io.on('connection', (socket) => {
       }
       socket.leave(currentRoom);
     }
+
     chatRooms[roomName].push(socket);
     socket.join(roomName);
     currentRoom = roomName;
   });
+  
+  
 
   // sending the message
   socket.on('chat message', ({ message, timestamp }) => {
@@ -61,10 +66,19 @@ io.on('connection', (socket) => {
       });
     }
   });
-  
+
+  //leaving the room
+  socket.on('leave chat', () => {
+    if (currentRoom !== null && chatRooms[currentRoom]) {
+      const index = chatRooms[currentRoom].indexOf(socket);
+      if (index !== -1) {
+        chatRooms[currentRoom].splice(index, 1);
+      }
+      currentRoom = null;
+    }
+  });
+
 });
-
-
 
 
 //-------DATABASE-------
@@ -136,7 +150,7 @@ app.get('/chatrooms', (req, res) => {
 app.get('/profile', (req, res) => {
   res.status(200).sendFile(__dirname + '/frontend/html/profile.html')
 
-  //handlebars with node and express
+  //handlebars with node and express???
 });
 
 app.get('/to-do-list', (req, res) => {
@@ -167,7 +181,7 @@ app.post('/get-user-data', async (req,res)=>{
 app.post('/get-user-chatrooms', async(req, res) => {  
   const user = req.cookies.userCookie;
 
-  db.query( "SELECT DISTINCT g.group_id, g.groupname FROM `groupchat` g, `users` u, `user_in_group` ug WHERE u.user_id=ug.user_id AND u.username=?",
+  db.query( "SELECT DISTINCT g.group_id, g.groupname FROM `groupchat` g, `users` u, `user_in_group` ug WHERE u.user_id=ug.user_id AND  g.group_id=ug.group_id AND u.username= ?",
     [user],
     (err, result) => {
       if (err) {
