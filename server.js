@@ -27,64 +27,86 @@ app.use(express.json());;
 app.use(cors());
 
 //---socket.io
-const chatRooms = {};
+let chatRooms = {};
 
 io.on('connection', (socket) => {
   let currentRoom = null;
   const cookies = cookie.parse(socket.handshake.headers.cookie);
 
   // joining
-  socket.on('join room', (roomName) => {
-
-    if (!chatRooms[roomName]) {
-      chatRooms[roomName] = [];
+  socket.on('join chat', (roomObject)=>{
+    console.log('Join')
+    if(chatRooms.roomId){
+      // socket.removeAllListeners()
+      socket.leave(chatRooms.roomId);
     }
-
-    if (currentRoom !== null) {
-      const index = chatRooms[currentRoom].indexOf(socket);
-      if (index !== -1) {
-        chatRooms[currentRoom].splice(index, 1);
-      }
-      socket.leave(currentRoom);
+    chatRooms = {
+      ...roomObject
     }
-
-    chatRooms[roomName].push(socket);
-    socket.join(roomName);
-    currentRoom = roomName;
+    socket.join(roomObject.roomId);
+    console.log(chatRooms);
   });
+
+  //   console.log("joined")
+  //   // if (!chatRooms[roomName]) {
+  //   //   chatRooms[roomName] = [];
+  //   // }
+  //   console.log(chatRooms[roomName]);
+  //   // console.log(currentRoom);
+  //   // if (currentRoom !== null) {
+  //   //   const index = chatRooms[currentRoom].indexOf(socket);
+  //   //   console.log(index);
+  //   //   if (index !== -1) {
+  //   //     chatRooms[currentRoom].splice(index, 1);
+  //   //   }
+  //   //   socket.leave(currentRoom);
+  //   // }
+  //   if (roomName !== null) {
+  //     const index = chatRooms[roomName].indexOf(socket.id);
+  //     console.log(index);
+  //     if (index !== -1) {
+  //       chatRooms[roomName].splice(index, 1);
+  //     }
+  //     socket.leave(roomName);
+  //   }
+  //   console.log(roomName);
+  //   console.log(socket.id);
+  //   console.log("chatRooms");
+  //   // for(let i=0; i<chatRooms.length; i++){
+  //   //   console.log(chatRooms[i]);
+  //   // }
+  //   // chatRooms[roomName].push(socket.id);
+  //   chatRooms = {
+  //     ...chatRooms,
+  //     [ roomName ] : {
+  //       id: socket.id
+  //     }
+  //   }
+  //   socket.join(roomName);
+  //   currentRoom = roomName;
+  // });
   
   
 
   // sending the message
-  socket.on('chat message', ({ message, timestamp }) => {
+  socket.on('chat server', (request) => {
+    console.log(request)
     const owner = cookies.userCookie;
-    timestamp = new Date().toISOString();
-    const messageObj = { message, owner, timestamp };
-    if (chatRooms[currentRoom]) {
-      chatRooms[currentRoom].forEach((socket) => {
-        socket.emit('chat message', messageObj);
-      });
+    let timestamp = new Date().toISOString();
+    const messageObj = { message: request.message, owner, timestamp, group_id: request.roomId };
+    if (chatRooms.roomId) {
+      // socket.emit('chat message',messageObj);
+      io.to(chatRooms.roomId).emit('chat client',messageObj);
     }
   });
 
-  //leaving the room
-  socket.on('leave chat', () => {
-    if (currentRoom !== null && chatRooms[currentRoom]) {
-      const index = chatRooms[currentRoom].indexOf(socket);
-      if (index !== -1) {
-        chatRooms[currentRoom].splice(index, 1);
-      }
-      currentRoom = null;
-    }
-  });
+  socket.on('disconnect', (request) => {
+    console.log("us")
+  })
 
 });
 
-
 //-------DATABASE-------
-
-//Initial aveam o conexiune creata, apoi am facut switch la pool
-
 const db = mysql.createConnection({
   host: 'localhost',
   port: 3306,

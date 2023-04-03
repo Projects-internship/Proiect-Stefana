@@ -18,8 +18,9 @@ async function getChatrooms(){
     chatroomsJSON.forEach(chatroom => {
         const listItem = document.createElement('li');
         listItem.textContent = chatroom.groupname;
+        listItem.value = chatroom.group_id;
         listItem.onclick = function Chatroom() {
-
+            document.querySelector('#messages').innerHTML = '';
             const roomName = chatroom.groupname; 
 
             const content = document.querySelector('.content');
@@ -53,26 +54,15 @@ async function getChatrooms(){
                 if (input.value) {
                   console.log('Sending message:', input.value);
                   console.log('Room name:', roomName);
-                  socket.emit('chat message', { message: input.value, roomName });
+                  socket.emit('chat server', { message: input.value, roomName, roomId: chatroom.group_id });
                   input.value = '';
                 }
               });
-
-            //DE INTREBAT ;-;
-            socket.on('chat message', function(msg){
-                const newMsg=document.createElement('li');
-                newMsg.textContent=`${msg.owner}: ${msg.message}`; 
-                const messages=document.getElementById('messages');
-                messages.appendChild(newMsg);
-                window.scrollTo(0,document.body.scrollHeight);
-               
-            })  
-          
+    
             // join a room
-            socket.emit('join room', roomName);
-            
+            socket.emit('join chat', {roomName, roomId: chatroom.group_id});  
+                   
           }
-
         
         chatroomsList.appendChild(listItem);
     });
@@ -105,18 +95,14 @@ for (let i = 0; i < list.length; i++) {
   list[i].appendChild(btn2).innerText=" ⋮ ";
 }
 
-//LEAVE CHATROOM BUTTON-- DE INTREBAT ;-;
-
-const leaveButton = document.createElement("button");
-leaveButton.innerHTML = "Leave Chat";
-leaveButton.onclick = function leaveRoom() {
-socket.emit("leave chat");
-//socket.disconnect();
-
-//clearing the messages from the previous chatroom
-const messages = document.getElementById("messages");
-messages.innerHTML = "";
-}
-const chatList=document.querySelector(".chat-list")
-chatList.appendChild(leaveButton);
-//----finished w/ leave-chat button
+//chat---------
+socket.on('chat client', function(msg){
+  console.log('Mesaj primit')
+  console.log(msg)
+    const newMsg=document.createElement('li');
+    newMsg.textContent=`${msg.owner}: ${msg.message}`; 
+    const messages=document.getElementById('messages');
+    messages.appendChild(newMsg);
+    window.scrollTo(0,document.body.scrollHeight);
+   
+}) 
