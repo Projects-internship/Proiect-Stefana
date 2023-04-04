@@ -47,48 +47,7 @@ io.on('connection', (socket) => {
     socket.join(roomObject.roomId);
     console.log(chatRooms);
   });
-
-  //   console.log("joined")
-  //   // if (!chatRooms[roomName]) {
-  //   //   chatRooms[roomName] = [];
-  //   // }
-  //   console.log(chatRooms[roomName]);
-  //   // console.log(currentRoom);
-  //   // if (currentRoom !== null) {
-  //   //   const index = chatRooms[currentRoom].indexOf(socket);
-  //   //   console.log(index);
-  //   //   if (index !== -1) {
-  //   //     chatRooms[currentRoom].splice(index, 1);
-  //   //   }
-  //   //   socket.leave(currentRoom);
-  //   // }
-  //   if (roomName !== null) {
-  //     const index = chatRooms[roomName].indexOf(socket.id);
-  //     console.log(index);
-  //     if (index !== -1) {
-  //       chatRooms[roomName].splice(index, 1);
-  //     }
-  //     socket.leave(roomName);
-  //   }
-  //   console.log(roomName);
-  //   console.log(socket.id);
-  //   console.log("chatRooms");
-  //   // for(let i=0; i<chatRooms.length; i++){
-  //   //   console.log(chatRooms[i]);
-  //   // }
-  //   // chatRooms[roomName].push(socket.id);
-  //   chatRooms = {
-  //     ...chatRooms,
-  //     [ roomName ] : {
-  //       id: socket.id
-  //     }
-  //   }
-  //   socket.join(roomName);
-  //   currentRoom = roomName;
-  // });
   
-  
-
   // sending the message
   socket.on('chat server', (request) => {
     console.log(request)
@@ -206,8 +165,6 @@ app.post('/get-user-data', async (req,res)=>{
 app.post('/get-user-chatrooms', async(req, res) => {  
   const user = req.cookies.userCookie;
 
-
-
   db.query( "SELECT DISTINCT u.user_id, g.group_id, g.groupname FROM `groupchat` g, `users` u, `user_in_group` ug WHERE u.user_id=ug.user_id AND  g.group_id=ug.group_id AND u.username= ?",
     [user],
     (err, result) => {
@@ -234,7 +191,7 @@ app.post('/get-user-to-do-list', async(req, res) => {
       } else if (result.length > 0) {
         res.json(result);
       } else {
-        res.json({ error: 'No to do list item found!' });
+        //res.json({ error: 'No to do list item found!' });
       }
     }
   );
@@ -276,8 +233,6 @@ app.put('/add-to-do-list-item', (req, res) => {
   });
 });
 
-
-
 function generateUniqueListId(callback) {
   const list_id = uuidv4();
   db.query("SELECT COUNT(*) AS count FROM `to_do_list` WHERE `list_id` = ?", [list_id], (err, result) => {
@@ -295,6 +250,26 @@ function generateUniqueListId(callback) {
     }
   });
 }
+
+//---------GET USER_ID-----------
+
+app.post('/get-user-ID', async(req, res) => {  
+  const user = req.cookies.userCookie;
+  db.query( "SELECT user_id FROM `users` WHERE username= ?",
+    [user],
+    (err, result) => {
+      if (err) {
+        res.json({ error: err });
+      } else if (result.length > 0) {
+        res.json(result);
+      } else {
+        res.json({ error: 'User ID not found!' });
+      }
+    }
+  );
+});
+
+
 //---------ADD MESSAGES-----------
 
 
@@ -311,4 +286,3 @@ app.all('*', (req, res) => {
 server.listen(5000, () => {
   console.log('listening on: 5000...')
 });
-
