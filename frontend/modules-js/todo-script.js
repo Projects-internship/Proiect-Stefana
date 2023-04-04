@@ -10,7 +10,7 @@ async function getToDoList(){
   });
   const todolistJSON = await response.json();
   console.log(todolistJSON);
-
+if(todolistJSON){}
   const todoList= document.querySelector('#todo-list');
   todoList.innerHTML = '';
   todolistJSON.forEach(todo => {
@@ -92,7 +92,6 @@ sendBtn.onclick = function addnewToDo(){
       btn.onclick = function addToDo() {
         const element = this.parentElement;
         element.style.display = "none";
-        const listItem=document.querySelector(".li");
         //---------------------------FETCH DELETE
         fetch(`/delete-to-do-list-item/${element.value}`, {
           method: 'DELETE'

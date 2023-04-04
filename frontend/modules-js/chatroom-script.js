@@ -54,7 +54,7 @@ async function getChatrooms(){
                 if (input.value) {
                   console.log('Sending message:', input.value);
                   console.log('Room name:', roomName);
-                  socket.emit('chat server', { message: input.value, roomName, roomId: chatroom.group_id });
+                  socket.emit('chat server', { message: input.value, roomName, roomId: chatroom.group_id, userID: chatroom.user_id });
                   input.value = '';
                 }
               });
@@ -67,7 +67,6 @@ async function getChatrooms(){
         chatroomsList.appendChild(listItem);
     });
 }
-
 
 //------CHATROOM LISTS------
 const list = document.getElementsByTagName("li");
@@ -95,10 +94,10 @@ for (let i = 0; i < list.length; i++) {
   list[i].appendChild(btn2).innerText=" ⋮ ";
 }
 
-//chat---------
+//---------chat---------
 socket.on('chat client', function(msg){
   console.log('Mesaj primit')
-  console.log(msg)
+//!!!!!!!!!!!! primeste si group_id si user_id
     const newMsg=document.createElement('li');
     newMsg.textContent=`${msg.owner}: ${msg.message}`; 
     const messages=document.getElementById('messages');

@@ -94,10 +94,10 @@ io.on('connection', (socket) => {
     console.log(request)
     const owner = cookies.userCookie;
     let timestamp = new Date().toISOString();
-    const messageObj = { message: request.message, owner, timestamp, group_id: request.roomId };
+    const messageObj = { message: request.message, owner, timestamp, group_id: request.roomId, user_id: request.userID };
     if (chatRooms.roomId) {
       // socket.emit('chat message',messageObj);
-      io.to(chatRooms.roomId).emit('chat client',messageObj);
+      io.to(chatRooms.roomId).emit('chat client', messageObj);
     }
   });
 
@@ -206,7 +206,9 @@ app.post('/get-user-data', async (req,res)=>{
 app.post('/get-user-chatrooms', async(req, res) => {  
   const user = req.cookies.userCookie;
 
-  db.query( "SELECT DISTINCT g.group_id, g.groupname FROM `groupchat` g, `users` u, `user_in_group` ug WHERE u.user_id=ug.user_id AND  g.group_id=ug.group_id AND u.username= ?",
+
+
+  db.query( "SELECT DISTINCT u.user_id, g.group_id, g.groupname FROM `groupchat` g, `users` u, `user_in_group` ug WHERE u.user_id=ug.user_id AND  g.group_id=ug.group_id AND u.username= ?",
     [user],
     (err, result) => {
       if (err) {
@@ -258,18 +260,41 @@ app.put('/add-to-do-list-item', (req, res) => {
   console.log("ADDED TODO");
   const userID = req.body.userID;
   const list_item = req.body.inputVal;
-  const list_id = uuidv4();
-  db.query("INSERT INTO `to_do_list` (`list_id`,`list_item`,`user_id`) VALUES (?,?,?)", [list_id,list_item, userID],
-  (err,result)=>{
+  generateUniqueListId((err, list_id) => {
     if (err) {
-      console.error(err);
       res.status(500).send(err);
     } else {
-      res.send(result);
+      db.query("INSERT INTO `to_do_list` (`list_id`,`list_item`,`user_id`) VALUES (?,?,?)", [list_id,list_item, userID], (err,result)=>{
+        if (err) {
+          console.error(err);
+          res.status(500).send(err);
+        } else {
+          res.send(result);
+        }
+      });
     }
   });
 });
 
+
+
+function generateUniqueListId(callback) {
+  const list_id = uuidv4();
+  db.query("SELECT COUNT(*) AS count FROM `to_do_list` WHERE `list_id` = ?", [list_id], (err, result) => {
+    if (err) {
+      console.error(err);
+      callback(err, null);
+    } else {
+      if (result[0].count > 0) {
+        // generate recursevely a new id if it's in the list
+        generateUniqueListId(callback);
+      } else {
+        //if unique, pass it back to the callback function
+        callback(null, list_id);
+      }
+    }
+  });
+}
 //---------ADD MESSAGES-----------
 
 
