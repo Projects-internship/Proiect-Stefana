@@ -8,6 +8,7 @@ const bodyParser = require('body-parser');
 const CookieParser = require('cookie-parser');
 const cors = require('cors');
 const { Server } = require('socket.io');
+const { v4: uuidv4 } = require('uuid');
 
 const app = express();
 const server = http.createServer(app);
@@ -133,6 +134,7 @@ app.post('/login', (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
   const email = req.body.email;
+  
 
   db.query("SELECT * FROM `users` WHERE username = ? AND password = ? AND email = ?",
     [username, password, email],
@@ -200,6 +202,7 @@ app.post('/get-user-data', async (req,res)=>{
         })
 })
 
+//----------GET USER CHATROOMS------------
 app.post('/get-user-chatrooms', async(req, res) => {  
   const user = req.cookies.userCookie;
 
@@ -216,6 +219,62 @@ app.post('/get-user-chatrooms', async(req, res) => {
     }
   );
 });
+
+//----------GET USER TO-DO LISTS-------------
+app.post('/get-user-to-do-list', async(req, res) => {  
+  const user = req.cookies.userCookie;
+
+  db.query( "SELECT DISTINCT l.user_id, l.list_id, l.list_item FROM `to_do_list` l, `users` u WHERE u.user_id=l.user_id AND u.username= ? ",
+    [user],
+    (err, result) => {
+      if (err) {
+        res.json({ error: err });
+      } else if (result.length > 0) {
+        res.json(result);
+      } else {
+        res.json({ error: 'No to do list item found!' });
+      }
+    }
+  );
+});
+
+//---------DELETE TO-DO LIST ITEM-----------
+app.delete('/delete-to-do-list-item/:list_id', (req, res) => {
+  const list_id = req.params.list_id;
+  console.log("TODO DELETED");
+  db.query("DELETE FROM `to_do_list` WHERE list_id = ?", [list_id],
+    (err,result)=>{
+      if (err) {
+        console.error(err);
+        res.status(500).send(err);
+      } else {
+        res.send(result);
+      }
+    });
+});
+
+//---------ADD TO-DO LIST ITEM-----------
+app.put('/add-to-do-list-item', (req, res) => {
+  console.log("ADDED TODO");
+  const userID = req.body.userID;
+  const list_item = req.body.inputVal;
+  const list_id = uuidv4();
+  db.query("INSERT INTO `to_do_list` (`list_id`,`list_item`,`user_id`) VALUES (?,?,?)", [list_id,list_item, userID],
+  (err,result)=>{
+    if (err) {
+      console.error(err);
+      res.status(500).send(err);
+    } else {
+      res.send(result);
+    }
+  });
+});
+
+//---------ADD MESSAGES-----------
+
+
+//----------GET MESSAGES-------------
+
 
 //-----404 response-----
 app.all('*', (req, res) => {

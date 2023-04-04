@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>DawnAir ChatApp</title>
     <link rel="stylesheet" type="text/css" href="style.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -31,16 +32,22 @@
       <div class="TODO">
 
         <h1> Personal Objectives</h1>
-        
+        <!-- <form id="form-todo"> -->
         <input type="text" id="inputToDo" placeholder="Write what you want to acomplish here!">
-        <button type="submit" id="btn3" onclick="addNewToDo()">Add</button>
-    
+        <button type="submit" id="btn3">Add</button>
+        <!-- </form> -->
       
       <ul id="todo-list">
-      <li>test </li> 
-      <li class="checked">test</li>
+      <!-- <li>test </li> 
+      <li class="checked">test</li> -->
     </ul>  
  </div>
   <script src="todo-script.js"></script>
 </body>
 </html>
+
+<script>
+  $(document).ready(function(){
+      getToDoList();
+  });
+</script>
