@@ -50,17 +50,63 @@ async function getChatrooms(){
           
             //event listener for when senging a message + what room you are sending it to
             form.addEventListener('submit', function (e) {
-                e.preventDefault();
-                if (input.value) {
-                  console.log('Sending message:', input.value);
-                  console.log('Room name:', roomName);
-                  socket.emit('chat server', { message: input.value, roomName, roomId: chatroom.group_id, userID: chatroom.user_id });
-                  input.value = '';
-                }
-              });
+              e.preventDefault();
+              if (input.value) {
+                console.log('Sending message:', input.value);
+                console.log('Room name:', roomName);
+                let timestamp= new Date();
+                const message = input.value; 
+                socket.emit('chat server', { message: message, roomName, roomId: chatroom.group_id, userID: chatroom.user_id, timestamp: timestamp });
+                fetch('/add-message', {
+                  method: 'PUT',
+                  headers: {
+                    'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify({
+                    message: message, 
+                    userID: chatroom.user_id,
+                    timestamp: timestamp,
+                    groupID: chatroom.group_id
+                  })
+                })
+                .then(response => {
+                  console.log("Message ADDED");
+                })
+                .catch(error => {
+                  console.error(error);
+                });
+              }
+            });
     
             // join a room
-            socket.emit('join chat', {roomName, roomId: chatroom.group_id});  
+            socket.emit('join chat', {roomName, roomId: chatroom.group_id});
+            
+            fetch('/display-group-messages', {
+              method: 'PUT',
+              headers: {
+                'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                  groupID: chatroom.group_id
+                  })
+                })
+                .then(response => {
+                  return response.json();
+                }
+                )
+                .then(data => {
+                  console.log(data);
+                  data.forEach(message => {
+                    const newMsg=document.createElement('li');
+                    newMsg.textContent=`${message.username}: ${message.content}`; 
+                    const messages=document.getElementById('messages');
+                    messages.appendChild(newMsg);
+                    window.scrollTo(0,document.body.scrollHeight);
+                  });
+                })
+                .catch(error => {
+                  console.error(error);
+                });
                    
           }
         

@@ -125,7 +125,7 @@ sendBtn.onclick = function addnewToDo(){
     } else {
     if (inputVal) {
       console.log("Todo: "+ inputVal);
-      //---------------------------FETCH ADD
+      //---------------------------FETCH USER ID + ADD MESSAGE TO DB
       let userID;
       fetch('/get-user-ID', {
         method: 'POST',
@@ -147,7 +147,7 @@ sendBtn.onclick = function addnewToDo(){
               'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-              inputVal: inputVal,
+              content: inputVal,
               userID: userID
             })
           })
@@ -190,4 +190,5 @@ sendBtn.onclick = function addnewToDo(){
       }
     }
   }
+
 

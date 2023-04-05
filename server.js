@@ -82,7 +82,7 @@ db.connect(function (error) {
   else {
     console.log("Connection to DB: Sucess!")
   }
-})
+});
 
 //---------GET AND POST-----------
 app.get('/', (req, res) => {
@@ -93,8 +93,6 @@ app.post('/login', (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
   const email = req.body.email;
-  
-
   db.query("SELECT * FROM `users` WHERE username = ? AND password = ? AND email = ?",
     [username, password, email],
     (err, result) => {
@@ -109,7 +107,7 @@ app.post('/login', (req, res) => {
         res.redirect('/wrongUser');
       }
     })
-})
+});
 
 app.post('/logout', (req, res) => {
   res.clearCookie('userCookie');
@@ -159,7 +157,7 @@ app.post('/get-user-data', async (req,res)=>{
             res.json({error: err})
           }
         })
-})
+});
 
 //----------GET USER CHATROOMS------------
 app.post('/get-user-chatrooms', async(req, res) => {  
@@ -182,7 +180,6 @@ app.post('/get-user-chatrooms', async(req, res) => {
 //----------GET USER TO-DO LISTS-------------
 app.post('/get-user-to-do-list', async(req, res) => {  
   const user = req.cookies.userCookie;
-
   db.query( "SELECT DISTINCT l.user_id, l.list_id, l.list_item FROM `to_do_list` l, `users` u WHERE u.user_id=l.user_id AND u.username= ? ",
     [user],
     (err, result) => {
@@ -234,25 +231,23 @@ app.put('/add-to-do-list-item', (req, res) => {
 });
 
 function generateUniqueListId(callback) {
-  const list_id = uuidv4();
-  db.query("SELECT COUNT(*) AS count FROM `to_do_list` WHERE `list_id` = ?", [list_id], (err, result) => {
+  db.query("SELECT MAX(`list_id`) AS max_id FROM `to_do_list`", (err, result) => {
     if (err) {
       console.error(err);
       callback(err, null);
     } else {
-      if (result[0].count > 0) {
-        // generate recursevely a new id if it's in the list
-        generateUniqueListId(callback);
+      let list_id;
+      if (result[0].max_id) {
+        list_id = parseInt(result[0].max_id) + 1;
       } else {
-        //if unique, pass it back to the callback function
-        callback(null, list_id);
+        list_id = 1;
       }
+      callback(null, list_id.toString());
     }
   });
 }
 
 //---------GET USER_ID-----------
-
 app.post('/get-user-ID', async(req, res) => {  
   const user = req.cookies.userCookie;
   db.query( "SELECT user_id FROM `users` WHERE username= ?",
@@ -269,17 +264,66 @@ app.post('/get-user-ID', async(req, res) => {
   );
 });
 
+//---------ADD MESSAGES--------------> WIP
+app.put('/add-message', (req, res) => {
+  console.log("Msg added to DB");
+  const groupID=req.body.groupID;
+  const userID = req.body.userID;
+  const content = req.body.message;
+  const timestamp=req.body.timestamp;
+  generateUniqueMessageId((err, message_id) => {
+    if (err) {
+      res.status(500).send(err);
+    } else {
+      db.query("INSERT INTO `messages`(`message_id`,`content`,`user_id`,`timestamp`, `group_id`) VALUES (?,?,?,?,?)", [message_id,content, userID, timestamp, groupID], (err,result)=>{
+        if (err) {
+          console.error(err);
+          res.status(500).send(err);
+        } else {
+          res.send(result);
+        }
+      });
+    }
+  });
+});
 
-//---------ADD MESSAGES-----------
+function generateUniqueMessageId(callback) {
+  db.query("SELECT MAX(`message_id`) AS max_id FROM `messages`", (err, result) => {
+    if (err) {
+      console.error(err);
+      callback(err, null);
+    } else {
+      let message_id;
+      if (result[0].max_id) {
+        message_id = parseInt(result[0].max_id) + 1;
+      } else {
+        message_id = 1;
+      }
+      callback(null, message_id.toString());
+    }
+  });
+}
 
+//----------display MESSAGES-------------
 
-//----------GET MESSAGES-------------
+app.put('/display-group-messages', async(req, res) => {  
+  const groupID=req.body.groupID;
+  db.query( "SELECT m.*, u.username FROM `messages` m, `users` u WHERE m.user_id=u.user_id AND m.group_id= ? ", [groupID], (err, result) => {
+    if (err) {
+      res.json({ error: err });
+    } else if (result.length > 0) {
+      res.json(result);
+    } else {
+      res.json({ error: 'No messages found!' });
+    }
+  });
+});
 
 
 //-----404 response-----
 app.all('*', (req, res) => {
   res.status(404).send('<h1>Resource not found!</h1>')
-})
+});
 
 //--------------------
 
