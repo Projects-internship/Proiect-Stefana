@@ -231,6 +231,27 @@ app.put('/add-to-do-list-item', (req, res) => {
   });
 });
 
+app.put('/add-message-to-do-list-item', (req, res) => {
+  console.log("ADDED TODO");
+  const userID = req.body.userID;
+  const list_item = req.body.inputVal;
+  generateUniqueListId((err, list_id) => {
+    if (err) {
+      res.status(500).send(err);
+    } else {
+      db.query("INSERT INTO `to_do_list` (`list_id`,`list_item`,`user_id`) VALUES (?,?,?)", [list_id,list_item, userID], (err,result)=>{
+        if (err) {
+          console.error(err);
+          res.status(500).send(err);
+        } else {
+          res.send(result);
+        }
+      });
+    }
+  });
+});
+
+
 // function generateUniqueListId(callback) {
 //   const list_id = uuidv4();
 //   db.query("SELECT COUNT(*) AS count FROM `to_do_list` WHERE `list_id` = ?", [list_id], (err, result) => {
@@ -337,7 +358,6 @@ app.put('/display-group-messages', async(req, res) => {
     }
   });
 });
-
 
 //-----------delete message------------
 app.delete('/delete-message', (req, res) => {

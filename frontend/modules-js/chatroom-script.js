@@ -110,6 +110,16 @@ async function getChatrooms(){
                    deleteButton.style.height="30px";
                    deleteButton.style.cursor="pointer";
                    deleteButton.innerHTML = " X ";
+
+                   //-----------ADD MSG TO TO-DO LIST----------------
+                   const todoButton = document.createElement('button');
+                   todoButton.className = "deleteButton";
+                   todoButton.style.background="transparent";
+                   todoButton.style.border="none";
+                   todoButton.style.width="30px";
+                   todoButton.style.height="30px";
+                   todoButton.style.cursor="pointer";
+                   todoButton.innerHTML = " ➤ ";
                   
                 const newMsg=document.createElement('li');
                 newMsg.textContent=`${message.username}: ${message.content}`; 
@@ -117,6 +127,7 @@ async function getChatrooms(){
                 const messages=document.getElementById('messages');
                 messages.appendChild(newMsg);
                 newMsg.appendChild(deleteButton);
+                newMsg.appendChild(todoButton);
                 window.scrollTo(0,document.body.scrollHeight);
 
 
@@ -138,23 +149,36 @@ async function getChatrooms(){
                   .catch(error => {
                     console.error(error);
                   });
-
-                  
                   const newMsg=document.getElementById(message.message_id);
                   newMsg.remove();
+                }
 
-            }
-
-
+                  todoButton.onclick = function AddToTodo() { 
+                    const url='/add-message-to-do-list-item';
+                    fetch(url, {
+                      method: 'PUT',
+                      headers: {
+                        'Accept': '*',
+                        'Content-Type': 'application/json'
+                      },
+                      body: JSON.stringify({
+                        userID: message.user_id,
+                        inputVal: message.content
+                      })
+                    })
+                    .then(response => {
+                      console.log("Message ADDED TO TODO");
+                    })
+                    .catch(error => {
+                      console.error(error);
+                    });
+                  }
 
                   });
                 })
                 .catch(error => {
                   console.error(error);
-                });
-
-                
-                   
+                });           
           }
         
         chatroomsList.appendChild(listItem);
@@ -189,11 +213,74 @@ for (let i = 0; i < list.length; i++) {
 
 //---------chat---------
 socket.on('chat client', function(msg){
+  //-----------DELETE BUTTON----------------
+  const deleteButton = document.createElement('button');
+  deleteButton.className = "deleteButton";
+  deleteButton.style.background="transparent";
+  deleteButton.style.border="none";
+  deleteButton.style.width="30px";
+  deleteButton.style.height="30px";
+  deleteButton.style.cursor="pointer";
+  deleteButton.innerHTML = " X ";
+
+  //-----------ADD MSG TO TO-DO LIST----------------
+  const todoButton = document.createElement('button');
+  todoButton.className = "deleteButton";
+  todoButton.style.background="transparent";
+  todoButton.style.border="none";
+  todoButton.style.width="30px";
+  todoButton.style.height="30px";
+  todoButton.style.cursor="pointer";
+  todoButton.innerHTML = " ➤ ";
+
+  deleteButton.onclick = function DeleteMessage() {
+    const url='/delete-message';
+    fetch(url, {
+      method: 'DELETE',
+      headers: {
+        'Accept': '*',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        messageID: message.message_id
+      })
+    })
+    .then(response => {
+      console.log("Message DELETED");
+    })
+    .catch(error => {
+      console.error(error);
+    });
+  }
+
+    todoButton.onclick = function AddToTodo() { 
+      const url='/add-message-to-do-list-item';
+      fetch(url, {
+        method: 'PUT',
+        headers: {
+          'Accept': '*',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          userID: msg.user_id,
+          inputVal: msg.message
+        })
+      })
+      .then(response => {
+        console.log("Message ADDED TO TODO");
+      })
+      .catch(error => {
+        console.error(error);
+      });
+    } 
+
   console.log('Mesaj primit')
     const newMsg=document.createElement('li');
     newMsg.textContent=`${msg.owner}: ${msg.message}`; 
     const messages=document.getElementById('messages');
     messages.appendChild(newMsg);
+    newMsg.appendChild(deleteButton);
+    newMsg.appendChild(todoButton);
     window.scrollTo(0,document.body.scrollHeight);
    
 }) 
