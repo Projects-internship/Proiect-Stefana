@@ -266,8 +266,6 @@ function generateUniqueListId(callback) {
   });
 }
 
-
-
 //---------GET USER_ID-----------
 app.post('/get-user-ID', async(req, res) => {  
   const user = req.cookies.userCookie;
@@ -338,6 +336,22 @@ app.put('/display-group-messages', async(req, res) => {
       res.json({ error: 'No messages found!' });
     }
   });
+});
+
+
+//-----------delete message------------
+app.delete('/delete-message', (req, res) => {
+  const message_id = req.body.messageID;
+  console.log("Message DELETED");
+  db.query("DELETE FROM `messages` WHERE message_id = ?", [message_id],
+    (err,result)=>{
+      if (err) {
+        console.error(err);
+        res.status(500).send(err);
+      } else {
+        res.send(result);
+      }
+    });
 });
 
 

@@ -16,13 +16,16 @@ async function getChatrooms(){
     const chatroomsList = document.querySelector("#chats");
     chatroomsList.innerHTML = '';
     chatroomsJSON.forEach(chatroom => {
+        
+
+        //----------------------------------------
         const listItem = document.createElement('li');
         listItem.textContent = chatroom.groupname;
         listItem.value = chatroom.group_id;
         listItem.onclick = function Chatroom() {
             document.querySelector('#messages').innerHTML = '';
             const roomName = chatroom.groupname; 
-
+  
             const content = document.querySelector('.content');
             //check if the content(=placeholder) has been removed, if not remove it
             if (content) {
@@ -97,16 +100,60 @@ async function getChatrooms(){
                 .then(data => {
                   console.log(data);
                   data.forEach(message => {
-                    const newMsg=document.createElement('li');
-                    newMsg.textContent=`${message.username}: ${message.content}`; 
-                    const messages=document.getElementById('messages');
-                    messages.appendChild(newMsg);
-                    window.scrollTo(0,document.body.scrollHeight);
+                    
+                   //-----------DELETE BUTTON----------------
+                   const deleteButton = document.createElement('button');
+                   deleteButton.className = "deleteButton";
+                   deleteButton.style.background="transparent";
+                   deleteButton.style.border="none";
+                   deleteButton.style.width="30px";
+                   deleteButton.style.height="30px";
+                   deleteButton.style.cursor="pointer";
+                   deleteButton.innerHTML = " X ";
+                  
+                const newMsg=document.createElement('li');
+                newMsg.textContent=`${message.username}: ${message.content}`; 
+                newMsg.id=message.message_id;
+                const messages=document.getElementById('messages');
+                messages.appendChild(newMsg);
+                newMsg.appendChild(deleteButton);
+                window.scrollTo(0,document.body.scrollHeight);
+
+
+                deleteButton.onclick = function DeleteMessage() {
+                  const url='/delete-message';
+                  fetch(url, {
+                    method: 'DELETE',
+                    headers: {
+                      'Accept': '*',
+                      'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                      messageID: message.message_id
+                    })
+                  })
+                  .then(response => {
+                    console.log("Message DELETED");
+                  })
+                  .catch(error => {
+                    console.error(error);
+                  });
+
+                  
+                  const newMsg=document.getElementById(message.message_id);
+                  newMsg.remove();
+
+            }
+
+
+
                   });
                 })
                 .catch(error => {
                   console.error(error);
                 });
+
+                
                    
           }
         
@@ -143,7 +190,6 @@ for (let i = 0; i < list.length; i++) {
 //---------chat---------
 socket.on('chat client', function(msg){
   console.log('Mesaj primit')
-//!!!!!!!!!!!! primeste si group_id si user_id
     const newMsg=document.createElement('li');
     newMsg.textContent=`${msg.owner}: ${msg.message}`; 
     const messages=document.getElementById('messages');
