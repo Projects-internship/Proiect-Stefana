@@ -15,14 +15,24 @@ async function getChatrooms(){
 
     const chatroomsList = document.querySelector("#chats");
     chatroomsList.innerHTML = '';
-    chatroomsJSON.forEach(chatroom => {
-        
 
-        //----------------------------------------
+    let selectedItem = null;
+
+    chatroomsJSON.forEach(chatroom => {
         const listItem = document.createElement('li');
         listItem.textContent = chatroom.groupname;
         listItem.value = chatroom.group_id;
         listItem.onclick = function Chatroom() {
+            
+          if (selectedItem) {
+            selectedItem.style.color = '';
+            selectedItem.style.fontWeight = '';
+          }
+            listItem.style.color='#330033';
+            listItem.style.fontWeight='bold';
+            
+            selectedItem = listItem;
+
             document.querySelector('#messages').innerHTML = '';
             const roomName = chatroom.groupname; 
   
