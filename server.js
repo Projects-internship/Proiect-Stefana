@@ -180,6 +180,7 @@ app.post('/get-user-chatrooms', async(req, res) => {
 //----------GET USER TO-DO LISTS-------------
 app.post('/get-user-to-do-list', async(req, res) => {  
   const user = req.cookies.userCookie;
+
   db.query( "SELECT DISTINCT l.user_id, l.list_id, l.list_item FROM `to_do_list` l, `users` u WHERE u.user_id=l.user_id AND u.username= ? ",
     [user],
     (err, result) => {
@@ -188,7 +189,7 @@ app.post('/get-user-to-do-list', async(req, res) => {
       } else if (result.length > 0) {
         res.json(result);
       } else {
-        //res.json({ error: 'No to do list item found!' });
+        res.json({ error: 'No to do list item found!' });
       }
     }
   );
@@ -230,6 +231,24 @@ app.put('/add-to-do-list-item', (req, res) => {
   });
 });
 
+// function generateUniqueListId(callback) {
+//   const list_id = uuidv4();
+//   db.query("SELECT COUNT(*) AS count FROM `to_do_list` WHERE `list_id` = ?", [list_id], (err, result) => {
+//     if (err) {
+//       console.error(err);
+//       callback(err, null);
+//     } else {
+//       if (result[0].count > 0) {
+//         // generate recursevely a new id if it's in the list
+//         generateUniqueListId(callback);
+//       } else {
+//         //if unique, pass it back to the callback function
+//         callback(null, list_id);
+//       }
+//     }
+//   });
+// }
+
 function generateUniqueListId(callback) {
   db.query("SELECT MAX(`list_id`) AS max_id FROM `to_do_list`", (err, result) => {
     if (err) {
@@ -246,6 +265,8 @@ function generateUniqueListId(callback) {
     }
   });
 }
+
+
 
 //---------GET USER_ID-----------
 app.post('/get-user-ID', async(req, res) => {  
