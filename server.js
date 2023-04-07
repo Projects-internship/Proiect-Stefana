@@ -53,11 +53,17 @@ io.on('connection', (socket) => {
     console.log(request)
     const owner = cookies.userCookie;
     let timestamp = new Date().toISOString();
-    const messageObj = { message: request.message, owner, timestamp, group_id: request.roomId, user_id: request.userID };
-    if (chatRooms.roomId) {
-      // socket.emit('chat message',messageObj);
-      io.to(chatRooms.roomId).emit('chat client', messageObj);
-    }
+    generateUniqueMessageId((err, message_id) => {
+      if (err) {
+        res.status(500).send(err);
+      } else {
+        const messageObj = { message_id, message: request.message, owner, timestamp, group_id: request.roomId, user_id: request.userID };
+        if (chatRooms.roomId) {
+          // socket.emit('chat message',messageObj);
+          io.to(chatRooms.roomId).emit('chat client', messageObj);
+        }
+      }
+    });
   });
 
   socket.on('disconnect', (request) => {
@@ -306,7 +312,6 @@ app.post('/get-user-ID', async(req, res) => {
 
 //---------ADD MESSAGES--------------> WIP
 app.put('/add-message', (req, res) => {
-  console.log("Msg added to DB");
   const groupID=req.body.groupID;
   const userID = req.body.userID;
   const content = req.body.message;
@@ -321,6 +326,7 @@ app.put('/add-message', (req, res) => {
           res.status(500).send(err);
         } else {
           res.send(result);
+          console.log("Msg added to DB");
         }
       });
     }
@@ -362,7 +368,6 @@ app.put('/display-group-messages', async(req, res) => {
 //-----------delete message------------
 app.delete('/delete-message', (req, res) => {
   const message_id = req.body.messageID;
-  console.log("Message DELETED");
   db.query("DELETE FROM `messages` WHERE message_id = ?", [message_id],
     (err,result)=>{
       if (err) {
@@ -370,6 +375,7 @@ app.delete('/delete-message', (req, res) => {
         res.status(500).send(err);
       } else {
         res.send(result);
+        console.log("Message DELETED");
       }
     });
 });
