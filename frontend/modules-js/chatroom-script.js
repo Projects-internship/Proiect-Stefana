@@ -131,10 +131,20 @@ async function getChatrooms(){
                    todoButton.style.cursor="pointer";
                    todoButton.innerHTML = " ➤ ";
                   
-                const newMsg=document.createElement('li');
-                newMsg.textContent=`${message.username}: ${message.content}`; 
-                newMsg.id=message.message_id;
-                const messages=document.getElementById('messages');
+                // const newMsg=document.createElement('li');
+                // newMsg.textContent=`${message.username}: ${message.content}`; 
+                // newMsg.id=message.message_id;
+                // const messages=document.getElementById('messages');
+                // messages.appendChild(newMsg);
+
+                const newMsg = document.createElement('li');
+                const ownerSpan = document.createElement('span');
+                ownerSpan.textContent = `${message.username}: `;
+                ownerSpan.style.fontSize = '1.6rem'; // set font size to 1.2em (adjust as needed)
+                newMsg.appendChild(ownerSpan);
+                newMsg.innerHTML += message.content; // use innerHTML to add the message text (which may contain special characters)
+                const messages = document.getElementById('messages');
+                newMsg.id = message.message_id;
                 messages.appendChild(newMsg);
                 //---------appending the delete button to the message
 
@@ -252,10 +262,19 @@ socket.on('chat client', function(msg){
   todoButton.innerHTML = " ➤ ";
 
   console.log('Mesaj primit')
-    const newMsg=document.createElement('li');
-    newMsg.textContent=`${msg.owner}: ${msg.message}`; 
-    const messages=document.getElementById('messages');
-    newMsg.id=msg.message_id;
+    // const newMsg=document.createElement('li');
+    // newMsg.textContent=`${msg.owner}: ${msg.message} `; 
+    // const messages=document.getElementById('messages');
+    // newMsg.id=msg.message_id;
+    // messages.appendChild(newMsg);
+    const newMsg = document.createElement('li');
+    const ownerSpan = document.createElement('span');
+    ownerSpan.textContent = `${msg.owner}: `;
+    ownerSpan.style.fontSize = '1.6rem'; 
+    newMsg.appendChild(ownerSpan);
+    newMsg.innerHTML += msg.message; 
+    const messages = document.getElementById('messages');
+    newMsg.id = msg.message_id;
     messages.appendChild(newMsg);
     //---------appending the delete button to the message
     const user = document.cookie
