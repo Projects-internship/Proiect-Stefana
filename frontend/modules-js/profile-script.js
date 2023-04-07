@@ -1,10 +1,4 @@
-async function logout(url = "/logout") {
-    const response = await fetch(url,
-        { method: "POST" });
-    if (response.redirected) {
-        window.location.href = response.url;
-    }
-}
+
 
 //------------username on user profile----------
     const user = document.cookie
@@ -29,23 +23,27 @@ async function getData(){
               username: username,
               email: email,
               position: position,
-              birthday: birthday
+              birthday: birthday,
+              hobby: hobby
             }
         ) 
     })
     const userJSON = await response.json();
 
-    const birthdayList= document.querySelector("#birthday");
-    birthdayList.innerHTML=userJSON.birthday;
+    const BirthDay= document.querySelector("#birthday");
+    BirthDay.innerHTML=userJSON.birthday;
 
-    const emailList= document.querySelector("#email");
-    emailList.innerHTML=userJSON.email;
+    const Email= document.querySelector("#email");
+    Email.innerHTML=userJSON.email;
 
-    const positionList= document.querySelector("#position");
-    positionList.innerHTML=userJSON.position;
+    const Position= document.querySelector("#position");
+    Position.innerHTML=userJSON.position;
 
-    const phoneList= document.querySelector("#phone");
-    phoneList.innerHTML=userJSON.phone;
+    const Phone= document.querySelector("#phone");
+    Phone.innerHTML=userJSON.phone;
+
+    const Hobby= document.querySelector("#hobby");
+    Hobby.innerHTML=userJSON.hobby;
 
 }
 

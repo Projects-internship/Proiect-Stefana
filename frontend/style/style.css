@@ -298,4 +298,17 @@ ul li.checked {
   padding:20px;
 }
 
+#logout_btn{
+  background: rgb(255, 255, 255);
+  border: 2px solid rgb(255, 255, 255);
+  outline: none;
+  border-radius: 2px;
+  cursor: pointer;
+  font-size: 1em;
+  color: rgb(46, 28, 70);
+  font-weight: 525;
+  width: 150px;
+  height: 50px;
+  position:bottom;
+}
 

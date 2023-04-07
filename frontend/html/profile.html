@@ -26,25 +26,52 @@
             <a href="/to-do-list" class="nav-items" id="notes">
                 To-Do
                 </a>
+        <button onclick="logout()" id="logout_btn">Log out</button>
       </div>
     <div class="main">
-        <div class="profile-wrapper">
-            <div class="username">
+        <div class="username">
             <h1></h1>
         </div>
-            <ul id="info"> 
-                <li><button onclick="logout()" id="logout_btn">Log out</button></li>
-                <li id="email"></li>
-                <li id="birthday"></li>
-                <li id="position"></li>
-                <li id="phone"></li>
-            </ul>
-        </div>
             <div class="profile-about">
-                <p contenteditable="true"> ABOUT ABOUT ABOUT ABOUT ABOUT ABOUT ABOUT ABOUT ABOUT ABOUT ABOUT ABOUT ABOUT ABOUT ABOUT ABOUT ABOUT </p>
+               
+                <div class="birthday-cointainer">
+                    <div class="birthday">
+                        <h2>Birthday</h2>
+                        <p id="birthday"></p>
+                    </div>
+                </div>
+                    <div class="email-container">
+                        <div class="email">
+                            <h2>Email</h2>
+                            <p id="email"></p>
+                        </div>
+                    </div>
+    
+                    <div class="phone-container">
+                     <div class="phone">
+                          <h2>Phone</h2>
+                          <p id="phone"></p>
+                     </div>
+                    </div>
+    
+                    <div class="hobby-container"> 
+                        <div class="hobby">
+                            <h2>Hobby</h2>
+                            <p id="hobby"></p>
+                        </div>
+                    </div>
+
+                    <div class="position-container">
+                        <div class="position">
+                            <h2>Position</h2>
+                            <p id="position"></p>
+                        </div>
+                    </div>
+                   
             </div>
     </div>
     <script src="profile-script.js"></script>
+    <script src="logout-script.js"></script>
 </body>
 </html>
 

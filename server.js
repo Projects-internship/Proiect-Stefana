@@ -145,7 +145,7 @@ app.get('/to-do-list', (req, res) => {
 app.post('/get-user-data', async (req,res)=>{
   const user= req.cookies.userCookie
 
-  db.query("SELECT user_id, username, email, phone, position, birthday FROM `users` WHERE username = ? LIMIT 1", [user],
+  db.query("SELECT user_id, username, email, phone, position, birthday, hobby FROM `users` WHERE username = ? LIMIT 1", [user],
         (err,result)=>{
           if(result.length>0){
             res.json({
@@ -154,7 +154,8 @@ app.post('/get-user-data', async (req,res)=>{
               email: result[0].email,
               phone: result[0].phone,
               position: result[0].position,
-              birthday: result[0].birthday
+              birthday: result[0].birthday,
+              hobby: result[0].hobby
             })
           }
           else {
