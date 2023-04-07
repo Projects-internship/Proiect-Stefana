@@ -111,41 +111,36 @@ async function getChatrooms(){
                   console.log(data);
                   data.forEach(message => {
                     
-                   //-----------DELETE BUTTON----------------
-                   const deleteButton = document.createElement('button');
-                   deleteButton.className = "deleteButton";
-                   deleteButton.style.background="transparent";
-                   deleteButton.style.border="none";
-                   deleteButton.style.width="30px";
-                   deleteButton.style.height="30px";
-                   deleteButton.style.cursor="pointer";
-                   deleteButton.innerHTML = " X ";
+              //-----------DELETE BUTTON----------------
+                const deleteButton = document.createElement('button');
+                deleteButton.className = "deleteButton";
+                deleteButton.style.background="transparent";
+                deleteButton.style.border="none";
+                deleteButton.style.width="30px";
+                deleteButton.style.height="30px";
+                deleteButton.style.cursor="pointer";
+                deleteButton.innerHTML = " X ";
 
-                   //-----------ADD MSG TO TO-DO LIST----------------
-                   const todoButton = document.createElement('button');
-                   todoButton.className = "deleteButton";
-                   todoButton.style.background="transparent";
-                   todoButton.style.border="none";
-                   todoButton.style.width="30px";
-                   todoButton.style.height="30px";
-                   todoButton.style.cursor="pointer";
-                   todoButton.innerHTML = " ➤ ";
+              //-----------ADD MSG TO TO-DO LIST----------------
+                const todoButton = document.createElement('button');
+                todoButton.className = "deleteButton";
+                todoButton.style.background="transparent";
+                todoButton.style.border="none";
+                todoButton.style.width="30px";
+                todoButton.style.height="30px";
+                todoButton.style.cursor="pointer";
+                todoButton.innerHTML = " ➤ ";
                   
-                // const newMsg=document.createElement('li');
-                // newMsg.textContent=`${message.username}: ${message.content}`; 
-                // newMsg.id=message.message_id;
-                // const messages=document.getElementById('messages');
-                // messages.appendChild(newMsg);
-
                 const newMsg = document.createElement('li');
                 const ownerSpan = document.createElement('span');
                 ownerSpan.textContent = `${message.username}: `;
-                ownerSpan.style.fontSize = '1.6rem'; // set font size to 1.2em (adjust as needed)
+                ownerSpan.style.fontSize = '1.6rem'; 
                 newMsg.appendChild(ownerSpan);
-                newMsg.innerHTML += message.content; // use innerHTML to add the message text (which may contain special characters)
+                newMsg.innerHTML += message.content; 
                 const messages = document.getElementById('messages');
                 newMsg.id = message.message_id;
                 messages.appendChild(newMsg);
+
                 //---------appending the delete button to the message
 
                 const user = document.cookie
@@ -208,7 +203,6 @@ async function getChatrooms(){
                   console.error(error);
                 });           
           }
-        
         chatroomsList.appendChild(listItem);
     });
 }
@@ -262,11 +256,6 @@ socket.on('chat client', function(msg){
   todoButton.innerHTML = " ➤ ";
 
   console.log('Mesaj primit')
-    // const newMsg=document.createElement('li');
-    // newMsg.textContent=`${msg.owner}: ${msg.message} `; 
-    // const messages=document.getElementById('messages');
-    // newMsg.id=msg.message_id;
-    // messages.appendChild(newMsg);
     const newMsg = document.createElement('li');
     const ownerSpan = document.createElement('span');
     ownerSpan.textContent = `${msg.owner}: `;
@@ -329,6 +318,5 @@ socket.on('chat client', function(msg){
           console.error(error);
         });
       } 
-   
-    
+     
 }) 
