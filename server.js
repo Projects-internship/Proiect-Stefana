@@ -122,7 +122,7 @@ app.post('/logout', (req, res) => {
   res.redirect('/loggedout');
 });
 
-app.get('/loggedout', (req, res) => {
+app.get('/loggedout',(req, res) => {
   res.status(200).sendFile(__dirname + '/frontend/html/loggedout.html')
 });
 
@@ -136,8 +136,6 @@ app.get('/chatrooms', (req, res) => {
 
 app.get('/profile', (req, res) => {
   res.status(200).sendFile(__dirname + '/frontend/html/profile.html')
-
-  //handlebars with node and express???
 });
 
 app.get('/to-do-list', (req, res) => {
