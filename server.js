@@ -31,7 +31,6 @@ app.use(cors());
 let chatRooms = {};
 
 io.on('connection', (socket) => {
-  let currentRoom = null;
   const cookies = cookie.parse(socket.handshake.headers.cookie);
 
   // joining
@@ -67,7 +66,7 @@ io.on('connection', (socket) => {
   });
 
   socket.on('disconnect', (request) => {
-    console.log("us")
+    // console.log('User disconnected');
   })
 
 });
@@ -90,10 +89,12 @@ db.connect(function (error) {
   }
 });
 
-//---------GET AND POST-----------
+//-------ROUTES-------
 app.get('/', (req, res) => {
   res.status(200).sendFile(__dirname + '/frontend/html/index.html')
 });
+
+const session = {};
 
 app.post('/login', (req, res) => {
   const username = req.body.username;
@@ -103,8 +104,11 @@ app.post('/login', (req, res) => {
     [username, password, email],
     (err, result) => {
       if (result.length > 0) {
-        //-----------cookie-------------
+        //-----------cookies-------------
         res.cookie('userCookie', username);
+        const sessionId=uuidv4();
+        session[sessionId] = username;
+        res.cookie('sessionId', sessionId);       
         //-------------------------------
         res.redirect('/chatrooms');
         console.log(`User logged in!`);
@@ -117,7 +121,7 @@ app.post('/login', (req, res) => {
 
 app.post('/logout', (req, res) => {
   res.clearCookie('userCookie');
-  res.clearCookie('emailCookie');
+  res.clearCookie('sessionId');
   console.log('User logged out!');
   res.redirect('/loggedout');
 });
@@ -131,15 +135,36 @@ app.get('/wrongUser', (req, res) => {
 });
 
 app.get('/chatrooms', (req, res) => {
-  res.status(200).sendFile(__dirname + '/frontend/html/chat.html')
+  const sessionId= req.cookies.sessionId;
+  const userSession = session[sessionId];
+  if(userSession){
+    res.status(200).sendFile(__dirname + '/frontend/html/chat.html')
+  }
+  else {
+    res.status(401).sendFile(__dirname + '/frontend/html/unauthorized.html');
+    }
 });
 
 app.get('/profile', (req, res) => {
-  res.status(200).sendFile(__dirname + '/frontend/html/profile.html')
+  const sessionId= req.cookies.sessionId;
+  const userSession = session[sessionId];
+  if(userSession){
+    res.status(200).sendFile(__dirname + '/frontend/html/profile.html')
+  }
+  else {
+    res.status(401).sendFile(__dirname + '/frontend/html/unauthorized.html');  
+  }
 });
 
 app.get('/to-do-list', (req, res) => {
-  res.status(200).sendFile(__dirname + '/frontend/html/todo.html')
+  const sessionId= req.cookies.sessionId;
+  const userSession = session[sessionId];
+  if(userSession){
+    res.status(200).sendFile(__dirname + '/frontend/html/to-do-list.html')
+  }
+  else {
+    res.status(401).sendFile(__dirname + '/frontend/html/unauthorized.html');
+  }
 });
 
 app.post('/get-user-data', async (req,res)=>{
@@ -255,7 +280,6 @@ app.put('/add-message-to-do-list-item', (req, res) => {
     }
   });
 });
-
 
 // function generateUniqueListId(callback) {
 //   const list_id = uuidv4();
@@ -379,14 +403,12 @@ app.delete('/delete-message', (req, res) => {
     });
 });
 
-
 //-----404 response-----
 app.all('*', (req, res) => {
   res.status(404).send('<h1>Resource not found!</h1>')
 });
 
 //--------------------
-
 server.listen(5000, () => {
   console.log('listening on: 5000...')
 });
