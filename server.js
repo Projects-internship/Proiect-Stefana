@@ -1,6 +1,6 @@
 const http = require('http');
 const express = require('express');
-var cookie = require('cookie');
+const cookie = require('cookie');
 const dotenv = require('dotenv');
 const path = require('path');
 const mysql = require('mysql');
@@ -9,6 +9,7 @@ const CookieParser = require('cookie-parser');
 const cors = require('cors');
 const { Server } = require('socket.io');
 const { v4: uuidv4 } = require('uuid');
+const bycrypt = require('bcrypt');
 
 const app = express();
 const server = http.createServer(app);
@@ -89,6 +90,23 @@ db.connect(function (error) {
   }
 });
 
+
+// db.query("SELECT user_id, password FROM users", function (error, results, fields) {
+//   results.forEach(function (result) {
+//     const id = result.id;
+//     const password = result.password;
+//     const mySalt=bycrypt.genSaltSync(10);
+//     const myHash=bycrypt.hashSync(password, mySalt);
+//     // console.log(myHash);
+//     db.query("UPDATE users SET password = ? WHERE user_id = ?", [myHash, id], function (error, results, fields) {
+//       if (error) {
+//         console.log(error);
+//       }
+//     });
+//   });
+// });
+
+
 //-------ROUTES-------
 app.get('/', (req, res) => {
   res.status(200).sendFile(__dirname + '/frontend/html/index.html')
@@ -100,14 +118,17 @@ app.post('/login', (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
   const email = req.body.email;
-  db.query("SELECT * FROM `users` WHERE username = ? AND password = ? AND email = ?",
+  db.query("SELECT user_id, username, email FROM users WHERE username = ? AND password = ? AND email = ?",
     [username, password, email],
     (err, result) => {
       if (result.length > 0) {
         //-----------cookies-------------
         res.cookie('userCookie', username);
         const sessionId=uuidv4();
-        session[sessionId] = username;
+        session[sessionId] = {
+          userId: result[0].id,
+          username: result[0].username
+        };
         res.cookie('sessionId', sessionId);       
         //-------------------------------
         res.redirect('/chatrooms');
@@ -160,7 +181,7 @@ app.get('/to-do-list', (req, res) => {
   const sessionId= req.cookies.sessionId;
   const userSession = session[sessionId];
   if(userSession){
-    res.status(200).sendFile(__dirname + '/frontend/html/to-do-list.html')
+    res.status(200).sendFile(__dirname + '/frontend/html/todo.html')
   }
   else {
     res.status(401).sendFile(__dirname + '/frontend/html/unauthorized.html');
@@ -226,8 +247,8 @@ app.post('/get-user-to-do-list', async(req, res) => {
 });
 
 //---------DELETE TO-DO LIST ITEM-----------
-app.delete('/delete-to-do-list-item/:list_id', (req, res) => {
-  const list_id = req.params.list_id;
+app.delete('/delete-to-do-list-item/:listID', (req, res) => {
+  const list_id = req.params.listID;
   console.log("TODO DELETED");
   db.query("DELETE FROM `to_do_list` WHERE list_id = ?", [list_id],
     (err,result)=>{
@@ -254,7 +275,7 @@ app.put('/add-to-do-list-item', (req, res) => {
           console.error(err);
           res.status(500).send(err);
         } else {
-          res.send(result);
+          res.send({list_id: list_id});
         }
       });
     }
