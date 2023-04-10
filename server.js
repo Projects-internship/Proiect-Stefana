@@ -125,14 +125,11 @@ app.post('/login', (req, res) => {
     [username, email],
     (err, result) => {
       if (result.length > 0) {
-        console.log(password);
-            console.log(result[0].password);
         bcrypt.compare(password, result[0].password, (err, response) => {
           if (response) {
             const sessionId = uuidv4();
             session[sessionId] = { 
-              user_id: result[0].user_id, 
-              username: result[0].username
+              userID: result[0].user_id, 
             };
             res.cookie('userCookie', username);
             res.cookie('sessionId', sessionId);
@@ -191,6 +188,17 @@ app.get('/to-do-list', (req, res) => {
   const userSession = session[sessionId];
   if(userSession){
     res.status(200).sendFile(__dirname + '/frontend/html/todo.html')
+  }
+  else {
+    res.status(401).sendFile(__dirname + '/frontend/html/unauthorized.html');
+  }
+});
+
+app.get('/users', (req, res) => {
+  const sessionId= req.cookies.sessionId;
+  const userSession = session[sessionId];
+  if(userSession){
+    res.status(200).sendFile(__dirname + '/frontend/html/users.html')
   }
   else {
     res.status(401).sendFile(__dirname + '/frontend/html/unauthorized.html');
@@ -431,6 +439,23 @@ app.delete('/delete-message', (req, res) => {
         console.log("Message DELETED");
       }
     });
+});
+
+//-----------get users----------------
+
+app.post('/get-users', async(req, res) => {
+  const sessionId= req.cookies.sessionId;
+  const userSession = session[sessionId];
+
+  db.query( "SELECT * FROM `users` WHERE user_id != ?", [userSession.userID], (err, result) => {
+    if (err) {
+      res.json({ error: err });
+    } else if (result.length > 0) {
+      res.json(result);
+    } else {
+      res.json({ error: 'No users found!' });
+    }
+  });
 });
 
 //-----404 response-----

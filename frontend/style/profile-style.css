@@ -56,6 +56,12 @@
   user-select: none;
 }
 
+@media (max-width: 800px) {
+  .logo {
+    font-size: 2rem;
+  }
+}
+
 .main{
     background:#cea5d1;
     min-height: 86vh;

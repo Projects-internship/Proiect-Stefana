@@ -68,6 +68,12 @@
   user-select: none;
 }
 
+@media (max-width: 800px) {
+  .logo {
+    font-size: 2rem;
+  }
+}
+
 .main1 {
   display: flex;
   justify-content: center;
