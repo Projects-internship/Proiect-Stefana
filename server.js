@@ -9,7 +9,7 @@ const CookieParser = require('cookie-parser');
 const cors = require('cors');
 const { Server } = require('socket.io');
 const { v4: uuidv4 } = require('uuid');
-const bycrypt = require('bcrypt');
+const bcrypt = require('bcrypt');
 
 const app = express();
 const server = http.createServer(app);
@@ -90,22 +90,25 @@ db.connect(function (error) {
   }
 });
 
+//--------------------HASHING PASSWORDS--------------------
+db.query("SELECT user_id, password FROM users", function (error, results, fields) {
+  results.forEach(function (result) {
+    const userID = result.user_id;
+    const password = result.password;
 
-// db.query("SELECT user_id, password FROM users", function (error, results, fields) {
-//   results.forEach(function (result) {
-//     const id = result.id;
-//     const password = result.password;
-//     const mySalt=bycrypt.genSaltSync(10);
-//     const myHash=bycrypt.hashSync(password, mySalt);
-//     // console.log(myHash);
-//     db.query("UPDATE users SET password = ? WHERE user_id = ?", [myHash, id], function (error, results, fields) {
-//       if (error) {
-//         console.log(error);
-//       }
-//     });
-//   });
-// });
+    const isHashed = password.startsWith('$2');
+    if (!isHashed) {
+      const mySalt = bcrypt.genSaltSync(10);
+      const myHash = bcrypt.hashSync(password, mySalt);
 
+      db.query("UPDATE `users` SET password = ? WHERE user_id = ?", [myHash, userID], function (error, results, fields) {
+        if (error) {
+          console.log(error);
+        }
+      });
+    }
+  });
+});
 
 //-------ROUTES-------
 app.get('/', (req, res) => {
@@ -118,24 +121,30 @@ app.post('/login', (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
   const email = req.body.email;
-  db.query("SELECT user_id, username, email FROM users WHERE username = ? AND password = ? AND email = ?",
-    [username, password, email],
+  db.query("SELECT user_id, username, email, password FROM users WHERE username = ? AND email = ?",
+    [username, email],
     (err, result) => {
       if (result.length > 0) {
-        //-----------cookies-------------
-        res.cookie('userCookie', username);
-        const sessionId=uuidv4();
-        session[sessionId] = {
-          userId: result[0].id,
-          username: result[0].username
-        };
-        res.cookie('sessionId', sessionId);       
-        //-------------------------------
-        res.redirect('/chatrooms');
-        console.log(`User logged in!`);
+        console.log(password);
+            console.log(result[0].password);
+        bcrypt.compare(password, result[0].password, (err, response) => {
+          if (response) {
+            const sessionId = uuidv4();
+            session[sessionId] = { 
+              user_id: result[0].user_id, 
+              username: result[0].username
+            };
+            res.cookie('userCookie', username);
+            res.cookie('sessionId', sessionId);
+            res.redirect('/chatrooms');
+          }
+          else {
+            res.status(401).sendFile(__dirname + '/frontend/html/wrongUser.html')
+          }
+        })
       }
       else {
-        res.redirect('/wrongUser');
+        res.res.status(401).sendFile(__dirname + '/frontend/html/wrongUser.html')
       }
     })
 });
