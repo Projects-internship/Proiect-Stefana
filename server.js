@@ -205,6 +205,17 @@ app.get('/users', (req, res) => {
   }
 });
 
+app.get('/userProfile', (req, res) => {
+  const sessionId= req.cookies.sessionId;
+  const userSession = session[sessionId];
+  if(userSession){
+    res.status(200).sendFile(__dirname + '/frontend/html/userProfile.html')
+  }
+  else {
+    res.status(401).sendFile(__dirname + '/frontend/html/unauthorized.html');
+  }
+});
+
 app.post('/get-user-data', async (req,res)=>{
   const user= req.cookies.userCookie
 
@@ -226,6 +237,30 @@ app.post('/get-user-data', async (req,res)=>{
           }
         })
 });
+
+
+app.post('/get-user-profile-data/:userID', async (req,res)=>{
+  const user= req.params.userID;
+  db.query("SELECT user_id, username, email, phone, position, birthday, hobby FROM `users` WHERE user_id = ? LIMIT 1", [user],
+        (err,result)=>{
+          if(result.length>0){
+            res.json({
+              userId: result[0].user_id,
+              username: result[0].username,
+              email: result[0].email,
+              phone: result[0].phone,
+              position: result[0].position,
+              birthday: result[0].birthday,
+              hobby: result[0].hobby
+            })
+          }
+          else {
+            res.json({error: err})
+          }
+        })
+});
+
+
 
 //----------GET USER CHATROOMS------------
 app.post('/get-user-chatrooms', async(req, res) => {  

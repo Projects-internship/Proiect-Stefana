@@ -15,9 +15,16 @@ async function getUsers(){
     usersJSON.forEach(user => {
         const userItem=document.createElement('li');
         userItem.innerHTML=user.username;
+        userItem.value=user.user_id;
         userList.appendChild(userItem);
+        userItem.onclick = function userProfile() {
+            console.log(userItem.value);
+            localStorage.setItem('profileID', userItem.value);
+            window.location.href = `/userProfile`;
+            
+        }    
     }
-    );
+);
 
 }
 

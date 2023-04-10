@@ -92,6 +92,7 @@
     padding:10px;
    
 }
+
 .users-container{
     background: #472f49;
     margin-left: 20px;
@@ -100,14 +101,12 @@
     border-radius: 10px;   
     padding: 20px;
     box-shadow: 0 7px 20px 0 rgba(0, 0, 0, 0.4), 0 7px 20px 0 rgba(0, 0, 0, 0.20);
-    
 }
 
 @media (min-width:800px){
 
     .users-container { margin:auto;}
   }
-
 
 ul li {
     cursor: pointer;
@@ -127,8 +126,6 @@ ul li {
     margin:5px;
     text-align: center;
 }
-
-
 
 #user-search-form{
     margin:auto;

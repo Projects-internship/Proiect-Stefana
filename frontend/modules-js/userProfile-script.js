@@ -1,8 +1,6 @@
-
-//------------data in user profile-----------------
-
-async function getData(){
-    let url='/get-user-data';
+async function getUserData(){
+    const userId = localStorage.getItem('profileID');
+    let url=`/get-user-profile-data/${userId}}`;
     const response= await fetch(url,
         {method:"POST",
         headers: 
@@ -33,4 +31,6 @@ async function getData(){
     Hobby.innerHTML=userJSON.hobby;
 
 }
-
+window.onbeforeunload = function() {
+    localStorage.removeItem('profileID');
+  };
