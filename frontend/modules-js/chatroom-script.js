@@ -168,6 +168,7 @@ async function getChatrooms(){
                   })
                   .then(response => {
                     console.log("Message DELETED");
+                    socket.emit('messageDeleted', { messageID: message.message_id });
                   })
                   .catch(error => {
                     console.error(error);
@@ -290,6 +291,7 @@ socket.on('chat client', function(msg){
       })
       .then(response => {
         console.log("Message DELETED");
+        socket.emit('messageDeleted', { messageID: msg.message_id });
       })
       .catch(error => {
         console.error(error);
@@ -320,3 +322,8 @@ socket.on('chat client', function(msg){
       } 
      
 }) 
+
+socket.on('messageDeleted', function(data) {
+  const newMsg=document.getElementById(data.messageID);
+  newMsg.remove();
+});

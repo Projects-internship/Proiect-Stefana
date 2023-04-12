@@ -238,7 +238,6 @@ app.post('/get-user-data', async (req,res)=>{
         })
 });
 
-
 app.post('/get-user-profile-data/:userID', async (req,res)=>{
   const user= req.params.userID;
   db.query("SELECT user_id, username, email, phone, position, birthday, hobby FROM `users` WHERE user_id = ? LIMIT 1", [user],
@@ -259,8 +258,6 @@ app.post('/get-user-profile-data/:userID', async (req,res)=>{
           }
         })
 });
-
-
 
 //----------GET USER CHATROOMS------------
 app.post('/get-user-chatrooms', async(req, res) => {  
@@ -470,11 +467,13 @@ app.delete('/delete-message', (req, res) => {
         console.error(err);
         res.status(500).send(err);
       } else {
+        io.emit('messageDeleted', { messageID: message_id });
         res.send(result);
         console.log("Message DELETED");
       }
     });
 });
+
 
 //-----------get users----------------
 
