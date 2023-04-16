@@ -27,13 +27,14 @@ if(todolistJSON){
 
     listItem.addEventListener('blur', () => {
       listItem.contentEditable = false;
+      const input = listItem.childNodes[0].textContent;
       fetch(`/edit-to-do-list-item/${listItem.value}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
           },
           body: JSON.stringify({
-            inputVal: listItem.textContent
+            inputVal: input
             })
           })
           .then(response => {
@@ -111,13 +112,14 @@ sendBtn.onclick = function addnewToDo(){
 
         newInput.addEventListener('blur', () => {
           newInput.contentEditable = false;
+          const input = newInput.childNodes[0].textContent;
           fetch(`/edit-to-do-list-item/${newInput.value}`, {
             method: 'PUT',
             headers: {
               'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-              inputVal: newInput.textContent
+              inputVal: input
             })
           })
             .then(response => {
@@ -215,13 +217,14 @@ sendBtn.onclick = function addnewToDo(){
 
             newInput.addEventListener('blur', () => {
               newInput.contentEditable = false;
+              const input = newInput.childNodes[0].textContent;
               fetch(`/edit-to-do-list-item/${newInput.value}`, {
                 method: 'PUT',
                 headers: {
                   'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                  inputVal: newInput.textContent
+                  inputVal: input
                 })
               })
                 .then(response => {
