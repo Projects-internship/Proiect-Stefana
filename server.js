@@ -310,6 +310,21 @@ app.delete('/delete-to-do-list-item/:listID', (req, res) => {
     });
 });
 
+app.put('/edit-to-do-list-item/:listID', (req, res) => {
+  const list_id = req.params.listID;
+  const list_item = req.body.inputVal;
+  console.log("TODO EDITED");
+  db.query("UPDATE `to_do_list` SET list_item = ? WHERE list_id = ?", [list_item, list_id],
+    (err,result)=>{
+      if(err){
+        console.error(err);
+        res.status(500).send(err);
+      } else {
+        res.send(result);
+      }
+    });
+});
+
 //---------ADD TO-DO LIST ITEM-----------
 app.put('/add-to-do-list-item', (req, res) => {
   console.log("ADDED TODO");

@@ -21,6 +21,32 @@ if(todolistJSON){
     listItem.textContent = todo.list_item;
     listItem.value = todo.list_id;
 
+    listItem.addEventListener('click', () => {
+      listItem.contentEditable = true;
+    });
+
+    listItem.addEventListener('blur', () => {
+      listItem.contentEditable = false;
+      fetch(`/edit-to-do-list-item/${listItem.value}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            inputVal: listItem.textContent
+            })
+          })
+          .then(response => {
+            console.log("Todo EDITED");
+          }
+          )
+          .catch(error => {
+            console.error(error);
+          }
+          );
+          
+    });
+
     //create DELETE TO-DO button
     const btn = document.createElement("button");
     btn.className = "closeButton";
@@ -79,10 +105,34 @@ sendBtn.onclick = function addnewToDo(){
       .then(data => {
         console.log("Todo ADDED");
         newInput.value = data.list_id; 
+        newInput.addEventListener('click', () => {
+          newInput.contentEditable = true;
+        });
+
+        newInput.addEventListener('blur', () => {
+          newInput.contentEditable = false;
+          fetch(`/edit-to-do-list-item/${newInput.value}`, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              inputVal: newInput.textContent
+            })
+          })
+            .then(response => {
+              console.log("Todo EDITED");
+            })
+            .catch(error => {
+              console.error(error);
+            });
+        });
+
       })
       .catch(error => {
         console.error(error);
       });
+
       
       const btn = document.createElement("button");
       btn.className = "closeButton";
@@ -118,13 +168,6 @@ sendBtn.onclick = function addnewToDo(){
   console.log(error);
 }
 }
-
-//// cross out to-do
-const crossOutBtn= document.querySelector("ul");
-crossOutBtn.addEventListener('click',(e)=>{
-  if(e.target.tagName ==='LI') {
-    e.target.classList.toggle('checked');}
-})
 
 const sendBtn= document.querySelector("#btn3");
 sendBtn.onclick = function addnewToDo(){
@@ -164,18 +207,46 @@ sendBtn.onclick = function addnewToDo(){
           .then(response => response.json())
           .then(data => {
             console.log("Todo ADDED");
-            newInput.value = data.list_id; 
+            newInput.value = data.list_id;
+        
+            newInput.addEventListener('click', () => {
+              newInput.contentEditable = true;
+            });
+
+            newInput.addEventListener('blur', () => {
+              newInput.contentEditable = false;
+              fetch(`/edit-to-do-list-item/${newInput.value}`, {
+                method: 'PUT',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                  inputVal: newInput.textContent
+                })
+              })
+                .then(response => {
+                  console.log("Todo EDITED");
+                })
+                .catch(error => {
+                  console.error(error);
+                });
+            });
+
+            document.querySelector("#todo-list").appendChild(newInput); 
+
           })
+          
           .catch(error => {
             console.error(error);
           });
-      
+
       })
       .catch(error => {
-      console.error(error);
+        console.error(error);
       });
-       
-  }
+
+    }
+
       const btn = document.createElement("button");
       btn.className = "closeButton";
       btn.style.background="transparent";
