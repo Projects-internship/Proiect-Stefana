@@ -123,7 +123,7 @@ async function getChatrooms(){
 
               //-----------ADD MSG TO TO-DO LIST----------------
                 const todoButton = document.createElement('button');
-                todoButton.className = "deleteButton";
+                todoButton.className = "addButton";
                 todoButton.style.background="transparent";
                 todoButton.style.border="none";
                 todoButton.style.width="30px";
@@ -186,7 +186,6 @@ async function getChatrooms(){
                         'Content-Type': 'application/json'
                       },
                       body: JSON.stringify({
-                        userID: message.user_id,
                         inputVal: message.content
                       })
                     })

@@ -348,7 +348,10 @@ app.put('/add-to-do-list-item', (req, res) => {
 
 app.put('/add-message-to-do-list-item', (req, res) => {
   console.log("ADDED TODO");
-  const userID = req.body.userID;
+  const sessionId= req.cookies.sessionId;
+  const userSession = session[sessionId];
+  const userID = userSession.userID;
+
   const list_item = req.body.inputVal;
   generateUniqueListId((err, list_id) => {
     if (err) {
@@ -459,7 +462,6 @@ function generateUniqueMessageId(callback) {
 }
 
 //----------display MESSAGES-------------
-
 app.put('/display-group-messages', async(req, res) => {  
   const groupID=req.body.groupID;
   db.query( "SELECT m.*, u.username FROM `messages` m, `users` u WHERE m.user_id=u.user_id AND m.group_id= ? ", [groupID], (err, result) => {
@@ -489,9 +491,7 @@ app.delete('/delete-message', (req, res) => {
     });
 });
 
-
 //-----------get users----------------
-
 app.post('/get-users', async(req, res) => {
   const sessionId= req.cookies.sessionId;
   const userSession = session[sessionId];
