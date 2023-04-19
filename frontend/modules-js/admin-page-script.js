@@ -67,8 +67,9 @@ function deleteGroupChat(){
 }
 
 function deleteUser(){
-    const userName = document.getElementById('delete-user').value;
-    fetch(`/delete-user/${userName}`, {
+    const userName = document.getElementById('delete-user-in-group').value;
+    const groupName=document.getElementById('group-of-user').value;
+    fetch(`/delete-user/${userName}/${groupName}`, {
         method: "DELETE",
         headers: {
             "Content-Type": "application/json"

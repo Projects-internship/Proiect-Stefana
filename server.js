@@ -638,26 +638,17 @@ app.delete("/delete-groupchat/:groupName", async (req, res) => {
 });
 
 //--------------delete user----------------
-app.delete("/delete-user/:userName", async (req, res) => {
+app.delete("/delete-user/:userName/:groupName", async (req, res) => {
   const userName = req.params.userName;
+  const groupName = req.params.groupName;
   db.query(
-    "DELETE FROM `user_in_group` WHERE `user_id` IN (SELECT `user_id` FROM `users` WHERE `username` = ?)",
-    [userName],
+    "DELETE FROM `user_in_group` WHERE `user_id` IN (SELECT `user_id` FROM `users` WHERE `username` = ?) AND `group_id` IN (SELECT `group_id` FROM `groupchat` WHERE `groupname` = ?)",
+    [userName, groupName],
     (err, result) => {
       if (err) {
         res.json({ error: err });
       } else {
-        db.query(
-          "DELETE FROM `users` WHERE `username` = ?",
-          [userName],
-          (err, result) => {
-            if (err) {
-              res.json({ error: err });
-            } else {
-              res.status(200).send(result);
-            }
-          }
-        );
+        res.status(200).send(result);
       }
     }
   );
