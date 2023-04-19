@@ -553,6 +553,116 @@ app.post("/get-admin-users", async (req, res) => {
   );
 });
 
+//-----------create groupchat----------------
+app.put("/create-groupchat/:groupName", async (req, res) => {
+  const groupName = req.params.groupName;
+  generateUniqueGroupId((err, group_id) => {
+    if (err) {
+      res.status(500).send(err);
+    } else {
+      db.query(
+        "INSERT INTO `groupchat`(`group_id`,`groupname`) VALUES (?,?)",
+        [group_id, groupName],
+        (err, result) => {
+          if (err) {
+            res.json({ error: err });
+          } else {
+            res.status(200).send(result);
+          }
+        }
+      );
+    }
+  });
+});
+function generateUniqueGroupId(callback) {
+  db.query(
+    "SELECT MAX(`group_id`) AS max_id FROM `groupchat`",
+    (err, result) => {
+      if (err) {
+        console.error(err);
+        callback(err, null);
+      } else {
+        let group_id;
+        if (result[0].max_id) {
+          group_id = parseInt(result[0].max_id) + 1;
+        } else {
+          group_id = 1;
+        }
+        callback(null, group_id.toString());
+      }
+    }
+  );
+}
+
+//--------------add user to group----------------
+app.put("/add-user-to-group/:group_name/:userID", async (req, res) => {
+  const group_name = req.params.group_name;
+  const userID = req.params.userID;
+  db.query(
+    "INSERT INTO `user_in_group` (group_id, user_id) SELECT g.group_id, u.user_id FROM groupchat g JOIN users u ON u.username = ? WHERE g.groupname = ? ",
+    [userID, group_name],
+    (err, result) => {
+      if (err) {
+        res.json({ error: err });
+      } else {
+        res.status(200).send(result);
+      }
+    }
+  );
+});
+
+//--------------delete groupchat----------------
+app.delete("/delete-groupchat/:groupName", async (req, res) => {
+  const groupName = req.params.groupName;
+  db.query(
+    "DELETE FROM `user_in_group` WHERE `group_id` IN (SELECT `group_id` FROM `groupchat` WHERE `groupname` = ?)",
+    [groupName],
+    (err, result) => {
+      if (err) {
+        res.json({ error: err });
+      } else {
+        db.query(
+          "DELETE FROM `groupchat` WHERE `groupname` = ?",
+          [groupName],
+          (err, result) => {
+            if (err) {
+              res.json({ error: err });
+            } else {
+              res.status(200).send(result);
+            }
+          }
+        );
+      }
+    }
+  );
+});
+
+//--------------delete user----------------
+app.delete("/delete-user/:userName", async (req, res) => {
+  const userName = req.params.userName;
+  db.query(
+    "DELETE FROM `user_in_group` WHERE `user_id` IN (SELECT `user_id` FROM `users` WHERE `username` = ?)",
+    [userName],
+    (err, result) => {
+      if (err) {
+        res.json({ error: err });
+      } else {
+        db.query(
+          "DELETE FROM `users` WHERE `username` = ?",
+          [userName],
+          (err, result) => {
+            if (err) {
+              res.json({ error: err });
+            } else {
+              res.status(200).send(result);
+            }
+          }
+        );
+      }
+    }
+  );
+});
+
 //-----404 response-----
 app.all("*", (req, res) => {
   res.status(404).send("<h1>Resource not found!</h1>");
