@@ -77,7 +77,7 @@
   background-color: #cea5d1;
 }
 .main {
-  display: flex;
+  display: inline-block;
 }
 
 #logout_btn {
@@ -92,4 +92,10 @@
   width: 150px;
   height: 50px;
   position: bottom;
+}
+
+.body{
+  background-color: #cea5d1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 }

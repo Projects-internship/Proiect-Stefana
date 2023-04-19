@@ -26,8 +26,55 @@
         <button onclick="logout()" id="logout_btn">Log out</button>
       </div>
 
-    <h1>Hello, admins!</h1>
+<div class="body">
+    <div class="main">
+      <h1> Create a new groupchat </h1>
+      <div class="create-chat">
+        <input type="text" id="chat-name" placeholder="Groupchat" />
+        <button onclick="createChat()">Create</button>
+        <div class="placeholder-chat"></div>
+    </div>
+    <div class="add-users">
+      <h1> Add users to a groupchat </h1>
+      <input type="text" id="user-chat-name" placeholder="Groupchat" />
+      <br>
+      <input type="text" id="user-name" placeholder="Username" />
+      <br>
+      <button onclick="addUserToGroup()">Add</button>
+      <div class="placeholder-user"></div>
+    </div>
+  </div>
 
+  <div class="side">
+    <h1> Admin Panel </h1>
+    <div class="admin-panel">
+      <input type="text" id="delete-user" placeholder="Username"/> <button onclick="deleteUser()">Delete User</button>
+      <br>
+      <div class="placeholder-delete-user"></div>
+      <br>
+      <input type="text" id="delete-chat" placeholder="Groupchat"/>  <button onclick="deleteGroupChat()">Delete Chat</button>
+      <div class="placeholder-delete-chat"></div>
+    </div>
+  </div>
+
+  <div class="user-list">
+    <h1> User List </h1>
+    <div class="user-list-container" id="user-list-container"></div>
+    <ul id="users">
+      <li>User</li>
+    </ul>
+  </div>
+
+  <div class="chat-list">
+    <h1> Chat List </h1>
+    <div class="chat-list-container" id="chat-list-container"></div>
+    <ul id="chats">
+      <li>ChatRoom</li>
+    </ul>
+</div>
+
+
+</div>
 
     <script src="admin-script.js"></script>
     <script src="admin-page-script.js"></script>
