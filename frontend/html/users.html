@@ -1,55 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>DawnAir ChatApp</title>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-        <link rel="stylesheet" type="text/css" href="users.css"/>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link href="https://fonts.googleapis.com/css2?family=Amatic+SC&family=Arizonia&family=Kalam:wght@300&display=swap" rel="stylesheet">
-    </head>
-    <body>
-        <div class="header" id="header2">
-            <h1 class="logo">DawnAir</h1>
-                <a href="/profile" onclick="" class="nav-items" id="profile">
-                    Profile
-                    </a>
-                <a href="/chatrooms" class="nav-items" id="chatrooms">
-                   ChatRooms
-                </a>
-                <a href="/to-do-list" class="nav-items" id="notes">
-                    To-Do
-                    </a>
-                <a href="/users" class="nav-items" id="notes">
-                    Users
-                </a>
-            <button onclick="logout()" id="logout_btn">Log out</button>
-          </div>
-          <div class="main">
-
-            <h1>Employee masterlist</h1>
-            <div class="search-bar">
-                <form id="user-search-form">
-                <input type="text" placeholder="Search" id="userSearch" />
-                </form>
-            </div>
-            <div class="users-container">
-                <ul id="users">
-                  
-                </ul>
-            </div>
-
-          </div>
-    
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DawnAir ChatApp</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="users.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Amatic+SC&family=Arizonia&family=Kalam:wght@300&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="header" id="header2">
+      <h1 class="logo">DawnAir</h1>
+      <a href="/profile" onclick="" class="nav-items" id="profile"> Profile </a>
+      <a href="/chatrooms" class="nav-items" id="chatrooms"> ChatRooms </a>
+      <a href="/to-do-list" class="nav-items" id="notes"> To-Do </a>
+      <a href="/users" class="nav-items" id="notes"> Users </a>
+      <div class="admin" id="admin"></div>
+      <button onclick="logout()" id="logout_btn">Log out</button>
+    </div>
+    <div class="main">
+      <h1>Employee masterlist</h1>
+      <div class="search-bar">
+        <form id="user-search-form">
+          <input type="text" placeholder="Search" id="userSearch" />
+        </form>
+      </div>
+      <div class="users-container">
+        <ul id="users"></ul>
+      </div>
+    </div>
+  </body>
 </html>
 <script src="users-script.js"></script>
 <script src="logout-script.js"></script>
+<script src="admin-script.js"></script>
 <script>
-    $(document).ready(function(){
-        getUsers();
-    });
+  $(document).ready(function () {
+    getUsers();
+  });
 </script>

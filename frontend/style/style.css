@@ -30,6 +30,19 @@
   z-index: 99;
 }
 
+#admin{
+  font-family: "Arizonia", cursive;
+  font-size: 1.5rem;
+  max-height: 100%;
+  color: azure;
+  user-select: none;
+  text-decoration: none;
+}
+
+#admin:hover{
+  cursor: pointer;
+}
+
 #profile
 {
   font-family: "Arizonia", cursive;
@@ -244,7 +257,6 @@ ul {
 }
 
 ul li {
-  cursor: pointer;
   position: center;
   padding: 12px;
   background: #cea5d1;

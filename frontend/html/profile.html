@@ -1,85 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>DawnAir ChatApp</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="profile-style.css"/>
+    <link rel="stylesheet" type="text/css" href="profile-style.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Amatic+SC&family=Arizonia&display=swap"
       rel="stylesheet"
     />
-</head>
-<body>
+  </head>
+  <body>
     <div class="header" id="header2">
-        <h1 class="logo">DawnAir</h1>
-            <a href="/profile" onclick="" class="nav-items" id="profile">
-                Profile
-                </a>
-            <a href="/chatrooms" class="nav-items" id="chatrooms">
-               ChatRooms
-            </a>
-            <a href="/to-do-list" class="nav-items" id="notes">
-                To-Do
-                </a>
-            <a href="/users" class="nav-items" id="notes">
-                Users
-            </a>
-        <button onclick="logout()" id="logout_btn">Log out</button>
-      </div>
+      <h1 class="logo">DawnAir</h1>
+      <a href="/profile" onclick="" class="nav-items" id="profile"> Profile </a>
+      <a href="/chatrooms" class="nav-items" id="chatrooms"> ChatRooms </a>
+      <a href="/to-do-list" class="nav-items" id="notes"> To-Do </a>
+      <a href="/users" class="nav-items" id="notes"> Users </a>
+      <div class="admin" id="admin"></div>
+      <button onclick="logout()" id="logout_btn">Log out</button>
+    </div>
     <div class="main">
-        <div class="username">
-            <h1></h1>
+      <div class="username">
+        <h1></h1>
+      </div>
+      <div class="profile-about">
+        <div class="birthday-cointainer">
+          <div class="birthday">
+            <h2>Birthday</h2>
+            <p id="birthday"></p>
+          </div>
         </div>
-            <div class="profile-about">
-               
-                <div class="birthday-cointainer">
-                    <div class="birthday">
-                        <h2>Birthday</h2>
-                        <p id="birthday"></p>
-                    </div>
-                </div>
-                    <div class="email-container">
-                        <div class="email">
-                            <h2>Email</h2>
-                            <p id="email"></p>
-                        </div>
-                    </div>
-    
-                    <div class="phone-container">
-                     <div class="phone">
-                          <h2>Phone</h2>
-                          <p id="phone"></p>
-                     </div>
-                    </div>
-    
-                    <div class="hobby-container"> 
-                        <div class="hobby">
-                            <h2>Hobby</h2>
-                            <p id="hobby"></p>
-                        </div>
-                    </div>
+        <div class="email-container">
+          <div class="email">
+            <h2>Email</h2>
+            <p id="email"></p>
+          </div>
+        </div>
 
-                    <div class="position-container">
-                        <div class="position">
-                            <h2>Position</h2>
-                            <p id="position"></p>
-                        </div>
-                    </div>
-                   
-            </div>
+        <div class="phone-container">
+          <div class="phone">
+            <h2>Phone</h2>
+            <p id="phone"></p>
+          </div>
+        </div>
+
+        <div class="hobby-container">
+          <div class="hobby">
+            <h2>Hobby</h2>
+            <p id="hobby"></p>
+          </div>
+        </div>
+
+        <div class="position-container">
+          <div class="position">
+            <h2>Position</h2>
+            <p id="position"></p>
+          </div>
+        </div>
+      </div>
     </div>
     <script src="profile-script.js"></script>
     <script src="logout-script.js"></script>
-</body>
+    <script src="admin-script.js"></script>
+  </body>
 </html>
 
 <script>
-        $(document).ready(function(){
-            getData();
-        });
+  $(document).ready(function () {
+    getData();
+  });
 </script>

@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>DawnAir ChatApp</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="chatroom-style.css" />
+    <link rel="stylesheet" type="text/css" href="admin-style.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -25,40 +25,12 @@
         <div class="admin" id="admin"></div>
         <button onclick="logout()" id="logout_btn">Log out</button>
       </div>
-      <div class="main">
-        <div class="container-chats">
-          <div class="chat-list">
-            <div class="search-bar">
-              <input type="text" placeholder="Search" id="chatSearch" />
-              <ul id="chats">
-                <li onclick="chatroom()">ChatRoom</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div class="mainchat">
-          <div class="content">
-            <div class="placeholder-msg">
-              <h2 id="placeholder">
-                Click on a chatroom and let's be productive for today! ❀
-              </h2>
-            </div>
-          </div>
 
-          <div class="chatroom"></div>
+    <h1>Hello, admins!</h1>
 
-          <ul id="messages"></ul>
-        </div>
-      </div>
-    </div>
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="chatroom-script.js"></script>
-    <script src="logout-script.js"></script>
+
     <script src="admin-script.js"></script>
-  </body>
+    <script src="admin-page-script.js"></script>
+    <script src="logout-script.js"></script>
+</body>
 </html>
-<script>
-  $(document).ready(function () {
-    getChatrooms();
-  });
-</script>

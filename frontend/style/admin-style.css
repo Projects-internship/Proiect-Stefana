@@ -1,0 +1,95 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Times New Roman", Times, serif;
+}
+
+#header2 {
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: #472f49;
+  padding: 20px 90px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 99;
+}
+
+#admin {
+  font-family: "Arizonia", cursive;
+  font-size: 1.5rem;
+  max-height: 100%;
+  color: azure;
+  user-select: none;
+  text-decoration: none;
+}
+
+#admin:hover {
+  cursor: pointer;
+}
+
+#profile {
+  font-family: "Arizonia", cursive;
+  font-size: 1.5rem;
+  max-height: 100%;
+  color: azure;
+  user-select: none;
+  text-decoration: none;
+}
+
+#chatrooms {
+  font-family: "Arizonia", cursive;
+  font-size: 1.5rem;
+  max-height: 100%;
+  color: azure;
+  user-select: none;
+  text-decoration: none;
+}
+
+#notes {
+  font-family: "Arizonia", cursive;
+  font-size: 1.5rem;
+  max-height: 100%;
+  color: rgb(255, 255, 255);
+  user-select: none;
+  text-decoration: none;
+}
+
+.logo {
+  font-family: "Arizonia", cursive;
+  font-size: 3.2rem;
+  max-height: 100%;
+  color: rgb(255, 255, 255);
+  user-select: none;
+}
+
+@media (max-width: 800px) {
+  .logo {
+    font-size: 2rem;
+  }
+}
+
+.background {
+  min-height: 100vh;
+  background-color: #cea5d1;
+}
+.main {
+  display: flex;
+}
+
+#logout_btn {
+  background: rgb(255, 255, 255);
+  border: 2px solid rgb(255, 255, 255);
+  outline: none;
+  border-radius: 2px;
+  cursor: pointer;
+  font-size: 1em;
+  color: rgb(46, 28, 70);
+  font-weight: 525;
+  width: 150px;
+  height: 50px;
+  position: bottom;
+}
