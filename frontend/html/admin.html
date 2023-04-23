@@ -42,9 +42,9 @@
 
     <div class="add-users">
       <h1> Add users to a groupchat </h1>
-      <input type="text" id="user-chat-name" placeholder="Groupchat" />
-      <br>
       <input type="text" id="user-name" placeholder="Username" />
+      <br>
+      <input type="text" id="user-chat-name" placeholder="Groupchat" />
       <br>
       <button onclick="addUserToGroup()">Add</button>
       <div class="placeholder-user"></div>
@@ -96,3 +96,10 @@
     <script src="logout-script.js"></script>
 </body>
 </html>
+
+<script>
+  $(document).ready(function () {
+    getChatrooms();
+    getUsers();
+  });
+</script>

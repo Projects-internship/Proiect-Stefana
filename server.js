@@ -654,6 +654,32 @@ app.delete("/delete-user/:userName/:groupName", async (req, res) => {
   );
 });
 
+//--------------get all groupchats----------------
+app.post("/get-all-groupchats", async (req, res) => {
+  db.query("SELECT * FROM `groupchat`", (err, result) => {
+    if (err) {
+      res.json({ error: err });
+    } else if (result.length > 0) {
+      res.json(result);
+    } else {
+      res.json({ error: "No groupchats found!" });
+    }
+  });
+});
+
+//----------------get all users----------------
+app.post("/get-all-users", async (req, res) => {
+  db.query("SELECT * FROM `users`", (err, result) => {
+    if (err) {
+      res.json({ error: err });
+    } else if (result.length > 0) {
+      res.json(result);
+    } else {
+      res.json({ error: "No users found!" });
+    }
+  });
+});
+
 //-----404 response-----
 app.all("*", (req, res) => {
   res.status(404).send("<h1>Resource not found!</h1>");
