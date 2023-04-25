@@ -219,6 +219,7 @@ app.get("/userProfile", routeProtection, (req, res) => {
   res.status(200).sendFile(__dirname + "/frontend/html/userProfile.html");
 });
 
+
 app.post("/get-user-data", async (req, res) => {
   const user = req.cookies.userCookie;
 
@@ -241,6 +242,32 @@ app.post("/get-user-data", async (req, res) => {
       }
     }
   );
+});
+
+//-------edit user hobby------------
+app.put('/edit-user-hobby/:hobby', async (req, res) => {
+  const user = req.cookies.userCookie;
+  const hobby = req.params.hobby;
+  db.query("UPDATE `users` SET hobby = ? WHERE username = ?", [hobby, user], (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
+    }
+  })
+});
+
+//-------edit user phone------------
+app.put('/edit-user-phone/:phone', async (req, res) => {
+  const user = req.cookies.userCookie;
+  const phone = req.params.phone;
+  db.query("UPDATE `users` SET phone = ? WHERE username = ?", [phone, user], (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
+    }
+  })
 });
 
 app.post("/get-user-profile-data/:userID", async (req, res) => {
@@ -325,7 +352,6 @@ app.delete("/delete-to-do-list-item/:listID", (req, res) => {
 app.put("/edit-to-do-list-item/:listID", (req, res) => {
   const list_id = req.params.listID;
   const list_item = req.body.inputVal;
-  console.log("TODO EDITED");
   db.query(
     "UPDATE `to_do_list` SET list_item = ? WHERE list_id = ?",
     [list_item, list_id],
@@ -619,16 +645,30 @@ app.delete("/delete-groupchat/:groupName", async (req, res) => {
     [groupName],
     (err, result) => {
       if (err) {
+        console.log(err);
         res.json({ error: err });
       } else {
         db.query(
-          "DELETE FROM `groupchat` WHERE `groupname` = ?",
+          "DELETE FROM `messages` WHERE `group_id` IN (SELECT `group_id` FROM `groupchat` WHERE `groupname` = ?)",
           [groupName],
           (err, result) => {
             if (err) {
+              console.log(err);
               res.json({ error: err });
             } else {
-              res.status(200).send(result);
+              console.log("Msgs deleted");
+              db.query(
+                "DELETE FROM `groupchat` WHERE `groupname` = ?",
+                [groupName],
+                (err, result) => {
+                  if (err) {
+                    console.log(err);
+                    res.json({ error: err });
+                  } else {
+                    res.status(200).send(result);
+                  }
+                }
+              );
             }
           }
         );
@@ -685,4 +725,3 @@ app.all("*", (req, res) => {
   res.status(404).send("<h1>Resource not found!</h1>");
 });
 
-//--------------------

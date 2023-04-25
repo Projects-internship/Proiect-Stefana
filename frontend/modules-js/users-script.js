@@ -24,3 +24,18 @@ async function getUsers() {
     };
   });
 }
+
+const searchBar=document.getElementById('userSearch');
+searchBar.addEventListener("input", (e)=>{
+  const searchString=e.target.value.toLowerCase();
+    const user=document.querySelectorAll('li');
+    const userArray=Array.from(user);
+    userArray.forEach(function(user){
+        const userName=user.textContent;
+        if(userName.toLowerCase().includes(searchString)){
+          user.style.display="block";
+        }else{
+          user.style.display="none";
+        }
+    })
+});

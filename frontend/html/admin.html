@@ -35,7 +35,7 @@
       <div class="create-chat">
         <input type="text" id="chat-name" placeholder="Groupchat" />
         <br>
-        <button onclick="createChat()">Create</button>
+        <button id="create-chat" onclick="createChat()">Create</button>
         <div class="placeholder-chat"></div>
     </div>
     </div>
@@ -46,7 +46,7 @@
       <br>
       <input type="text" id="user-chat-name" placeholder="Groupchat" />
       <br>
-      <button onclick="addUserToGroup()">Add</button>
+      <button id="add-user" onclick="addUserToGroup()">Add</button>
       <div class="placeholder-user"></div>
     </div>
   
@@ -58,7 +58,7 @@
       <br>
       <input type="text" id="group-of-user" placeholder="Groupchat"/> 
       <br>
-      <button onclick="deleteUser()">Remove User</button>
+      <button id="delete-user" onclick="deleteUser()">Remove User</button>
       <br>
       <div class="placeholder-delete-user"></div>
     </div>
@@ -67,7 +67,7 @@
       <h1> Delete groupchat </h1>
       <input type="text" id="delete-chat" placeholder="Groupchat"/> 
       <br>
-      <button onclick="deleteGroupChat()">Delete Chat</button>
+      <button id= "delete-chat-btn" onclick="deleteGroupChat()">Delete Chat</button>
       <div class="placeholder-delete-chat"></div>
       </div>
   
@@ -81,7 +81,7 @@
   </div>
 
   <div class="chat-list">
-    <h1> Chat List </h1>
+    <h1> Groupchat List </h1>
     <div class="chat-list-container" id="chat-list-container"></div>
     <ul id="chats">
       <li>ChatRoom</li>

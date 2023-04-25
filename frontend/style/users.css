@@ -93,8 +93,6 @@
 
 /* -------------------------------------------- */
 .main h1 {
-  /* font-family: "Kalam", cursive; */
-  /* letter-spacing: 1px; */
   font-size: 2.3rem;
   font-weight: 600;
   color: #472f49;
@@ -166,3 +164,4 @@ ul li {
     width: 80%;
   }
 }
+

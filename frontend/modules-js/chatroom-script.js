@@ -94,6 +94,8 @@ async function getChatrooms() {
               console.error(error);
             });
         }
+
+        input.value = "";
       });
 
       // join a room
@@ -332,3 +334,18 @@ socket.on("messageDeleted", function (data) {
   const newMsg = document.getElementById(data.messageID);
   newMsg.remove();
 });
+
+const searchBar=document.getElementById('chatSearch');
+searchBar.addEventListener("input",function(e){
+    const searchString=e.target.value.toLowerCase();
+    const groupchat=document.querySelectorAll('li');
+    const groupchatArray=Array.from(groupchat);
+    groupchatArray.forEach(function(groupchat){
+        const groupName=groupchat.textContent;
+        if(groupName.toLowerCase().includes(searchString)){
+          groupchat.style.display="block";
+        }else{
+          groupchat.style.display="none";
+        }
+    })
+})  

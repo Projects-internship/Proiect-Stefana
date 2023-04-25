@@ -11,7 +11,7 @@ function createChat(){
             .then(data => {
                 if(data.affectedRows>0){
                 const placeholder=document.querySelector(".placeholder-chat");
-                placeholder.innerHTML = "Chat created!";
+                placeholder.innerHTML = "Groupchat created!";
                 setTimeout(hideElement, 2000);
                 
                 function hideElement() {
@@ -26,7 +26,7 @@ function createChat(){
                 }
                 else{
                 const placeholder=document.querySelector(".placeholder-chat");
-                placeholder.innerHTML = "Chat could not be created!";
+                placeholder.innerHTML = "Groupchat could not be created!";
                 }
             });
 }
@@ -73,7 +73,7 @@ function deleteGroupChat(){
     .then(data => {
         if(data.affectedRows>0){
             const placeholder=document.querySelector(".placeholder-delete-chat");
-            placeholder.innerHTML = "Chat deleted!";
+            placeholder.innerHTML = "Groupchat deleted!";
 
             setTimeout(hideElement, 2000);
             function hideElement() {
@@ -85,7 +85,7 @@ function deleteGroupChat(){
         }
         else{
             const placeholder=document.querySelector(".placeholder-delete-chat");
-            placeholder.innerHTML = "Chat could not be deleted!";
+            placeholder.innerHTML = "Groupchat could not be deleted!";
         }
     });
 }

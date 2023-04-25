@@ -72,6 +72,7 @@
   }
 }
 
+
 .background {
   min-height: 100vh;
   background-color: #cea5d1;
@@ -98,4 +99,362 @@
   background-color: #cea5d1;
   display: grid;
   grid-template-columns: 1fr 1fr;
+}
+
+@media (max-width: 650px) {
+  .body {
+   grid-template-columns: 1fr;
+  }
+}
+
+.panel h1{
+  font-family: "Arizonia", cursive;
+  font-size: 3.5rem;
+  font-weight: 100;
+  max-height: 100%;
+  color: rgb(255, 255, 255);
+  user-select: none;
+  text-decoration: none;
+}
+
+#users {
+  cursor: pointer;
+  padding: 12px;
+  background: #49354a;
+  color: rgb(255, 255, 255);
+  transition: 0.2s;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  font-size: 1.6rem;
+  list-style-type: none;
+  min-width: 20vh;
+  max-width: 70%;
+  margin: auto;
+
+}
+
+#users li {
+    background: #694e6b;
+    color: #fff;
+    transition: 0.2s;
+    margin:5px;
+    height:45px;
+    text-align: center;
+}
+
+
+#chats {
+  cursor: pointer;
+  padding: 12px;
+  background: #49354a;
+  color: rgb(255, 255, 255);
+  transition: 0.2s;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  font-size: 1.6rem;
+  list-style-type: none;
+  min-width: 20vh;
+  max-width: 70%;
+  margin: auto;
+}
+
+#chats li {
+  background: #694e6b;
+  color: #fff;
+  transition: 0.2s;
+  margin:5px;
+  height:45px;
+  text-align: center;
+}
+
+#chat-name {
+  position: relative;
+  width: 40%;
+  height: 20px;
+ 
+}
+
+#chat-name-box label {
+    position:absolute;
+    left: 6px;
+    color:#fff;
+    font-weight:500px;
+    pointer-events: none;
+    bottom:5px;
+}
+
+#chat-name input {
+    width:100%;
+    height:100%;
+    background: rgba(0, 0, 0, .25);
+    border: none;
+    padding:10px;
+    color:#fff;
+}
+
+#user-name {
+  position: relative;
+  width: 40%;
+  height: 20px;
+ 
+}
+#user-name-box label {
+    position:absolute;
+    left: 6px;
+    color:#fff;
+    font-weight:500px;
+    pointer-events: none;
+    bottom:5px;
+}
+
+#user-name input {
+    width:100%;
+    height:100%;
+    background: rgba(0, 0, 0, .25);
+    border: none;
+    padding:10px;
+    color:#fff;
+}
+
+#user-chat-name {
+  position: relative;
+  width: 40%;
+  height: 20px;
+ 
+}
+#user-chat-name-box label {
+    position:absolute;
+    left: 6px;
+    color:#fff;
+    font-weight:500px;
+    pointer-events: none;
+    bottom:5px;
+}
+
+#user-chat-name input {
+    width:100%;
+    height:100%;
+    background: rgba(0, 0, 0, .25);
+    border: none;
+    padding:10px;
+    color:#fff;
+}
+
+#delete-user-in-group{
+  position: relative;
+  width: 40%;
+  height: 20px;
+ 
+}
+#delete-user-in-grouplabel {
+    position:absolute;
+    left: 6px;
+    color:#fff;
+    font-weight:500px;
+    pointer-events: none;
+    bottom:5px;
+}
+
+#delete-user-in-group input {
+    width:100%;
+    height:100%;
+    background: rgba(0, 0, 0, .25);
+    border: none;
+    padding:10px;
+    color:#fff;
+}
+
+#group-of-user{
+  position: relative;
+  width: 40%;
+  height: 20px;
+ 
+}
+#group-of-user label {
+    position:absolute;
+    left: 6px;
+    color:#fff;
+    font-weight:500px;
+    pointer-events: none;
+    bottom:5px;
+}
+
+#group-of-user input {
+    width:100%;
+    height:100%;
+    background: rgba(0, 0, 0, .25);
+    border: none;
+    padding:10px;
+    color:#fff;
+}
+
+#delete-chat{
+  position: relative;
+  width: 40%;
+  height: 20px;
+ 
+}
+#delete-chat label {
+    position:absolute;
+    left: 6px;
+    color:#fff;
+    font-weight:500px;
+    pointer-events: none;
+    bottom:5px;
+}
+
+#delete-chat input {
+    width:100%;
+    height:100%;
+    background: rgba(0, 0, 0, .25);
+    border: none;
+    padding:10px;
+    color:#fff;
+}
+
+#create-chat {
+  background: rgb(255, 255, 255);
+  border: 2px solid rgb(255, 255, 255);
+  outline: none;
+  border-radius: 2px;
+  cursor: pointer;
+  font-size: 1em;
+  color: rgb(46, 28, 70);
+  font-weight: 525;
+  width: 15%;
+  height: 10%;
+  margin:2px;
+}
+
+#create-chat:hover{
+  background-color: #694e6b;
+  color: rgb(255, 255, 255);
+  border: 2px solid #694e6b;
+  transition: 0.5s;
+}
+
+#delete-user {
+  background: rgb(255, 255, 255);
+  border: 2px solid rgb(255, 255, 255);
+  outline: none;
+  border-radius: 2px;
+  cursor: pointer;
+  font-size: 1em;
+  color: rgb(46, 28, 70);
+  font-weight: 525;
+  width: 15%;
+  height: 17%;
+  margin:2px;
+}
+
+@media (max-width:1300px){
+  #delete-user{
+    height: 30%;
+    width:12%;} 
+}
+
+#delete-user:hover{
+  background-color: #694e6b;
+  color: rgb(255, 255, 255);
+  border: 2px solid #694e6b;
+  transition: 0.5s;
+}
+
+#delete-chat-btn {
+  background: rgb(255, 255, 255);
+  border: 2px solid rgb(255, 255, 255);
+  outline: none;
+  border-radius: 2px;
+  cursor: pointer;
+  font-size: 1em;
+  color: rgb(46, 28, 70);
+  font-weight: 525;
+  width: 15%;
+  height: 17%;
+  margin:2px;
+}
+
+#delete-chat-btn:hover{
+  background-color: #694e6b;
+  color: rgb(255, 255, 255);
+  border: 2px solid #694e6b;
+  transition: 0.5s;
+}
+
+@media (max-width:1200px){
+  #delete-chat-btn{
+    height: 30%;
+    width:12%;} 
+}
+
+#add-user {
+  background: rgb(255, 255, 255);
+  border: 2px solid rgb(255, 255, 255);
+  outline: none;
+  border-radius: 2px;
+  cursor: pointer;
+  font-size: 1em;
+  color: rgb(46, 28, 70);
+  font-weight: 525;
+  width: 15%;
+  height: 17%;
+  margin:2px;
+}
+
+#add-user:hover{
+  background-color: #694e6b;
+  color: rgb(255, 255, 255);
+  border: 2px solid #694e6b;
+  transition: 0.5s;
+}
+
+.user-list{
+  border: 15px solid #694e6b;
+}
+
+.chat-list{
+  border: 15px solid #694e6b;
+}
+
+.create-groupchat{
+  text-align: center;
+  border: 15px solid #694e6b;
+}
+
+.add-users{
+  text-align: center;
+  border: 15px solid #694e6b;
+}
+
+.delete-users{
+  text-align: center;
+  border: 15px solid #694e6b;
+}
+
+.delete-chats{
+  text-align: center;
+  border: 15px solid #694e6b;
+}
+
+.user-list{
+  text-align: center;
+  border: 15px solid #694e6b;
+}
+
+.chat-list{
+  text-align: center;
+  border: 15px solid #694e6b;
+}
+
+.panel{
+  text-align: center;
+  border: 15px solid #694e6b;
+}
+
+h1{
+  margin:10px;
 }

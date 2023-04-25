@@ -367,6 +367,8 @@ sendBtn.onclick = function addnewToDo() {
         .catch((error) => {
           console.error(error);
         });
+
+        inputVal="";
     }
   }
 };
