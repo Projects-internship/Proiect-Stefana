@@ -10,6 +10,13 @@ async function getChatrooms() {
     },
     body: JSON.stringify({}),
   });
+
+  //---make sure when placeholder is there is no msg box
+  const content = document.querySelector(".content");
+  if (content) {
+  document.querySelector("#messages").style.display = "none";
+} 
+
   const chatroomsJSON = await response.json();
   console.log(chatroomsJSON);
 
@@ -40,6 +47,7 @@ async function getChatrooms() {
       if (content) {
         content.remove();
       }
+      document.querySelector("#messages").style.display = "block";
       const formCheck = document.querySelector("#myform");
       const buttonCheck = document.querySelector("#mybtn");
 
@@ -50,15 +58,24 @@ async function getChatrooms() {
       }
 
       //css+html elements in js
-      const form = document.createElement("form");
-      form.setAttribute("id", "myform");
-      const input = document.createElement("input");
-      const button = document.createElement("button");
-      button.setAttribute("id", "mybtn");
-      button.innerHTML = "Send!";
-      button.type = "submit";
-      document.querySelector(".chatroom").appendChild(form).appendChild(input);
-      document.querySelector(".chatroom").appendChild(form).appendChild(button);
+      const sendMessageDiv = document.querySelector('.sendMessage');
+
+      const form = document.createElement('form');
+      form.setAttribute('id', 'myform');
+      
+      const input = document.createElement('input');
+      input.setAttribute('type', 'text');
+      input.setAttribute('name', 'message');
+      input.setAttribute('placeholder', 'Type your message here...');
+      
+      const button = document.createElement('button');
+      button.setAttribute('id', 'mybtn');
+      button.setAttribute('type', 'submit');
+      button.innerText = 'Send!';
+      
+      form.appendChild(input);
+      form.appendChild(button);
+      sendMessageDiv.appendChild(form);
 
       //event listener for when senging a message + what room you are sending it to
       form.addEventListener("submit", function (e) {
@@ -156,6 +173,13 @@ async function getChatrooms() {
             if (message.username === user) {
               newMsg.appendChild(deleteButton);
             }
+
+            //---------seeing whether a message is from the sender or not
+            if (message.username === user) {
+              newMsg.classList.add("user-message");
+            } else {
+              newMsg.classList.add("other-message");
+            }
             //-------------------------------------------------
             newMsg.appendChild(todoButton);
             window.scrollTo(0, document.body.scrollHeight);
@@ -177,12 +201,14 @@ async function getChatrooms() {
                   socket.emit("messageDeleted", {
                     messageID: message.message_id,
                   });
+                  const newMsg = document.getElementById(message.message_id);
+                  newMsg.remove();
                 })
                 .catch((error) => {
                   console.error(error);
                 });
-              const newMsg = document.getElementById(message.message_id);
-              newMsg.remove();
+              // const newMsg = document.getElementById(message.message_id);
+              // newMsg.remove();
             };
 
             todoButton.onclick = function AddToTodo() {
@@ -280,6 +306,12 @@ socket.on("chat client", function (msg) {
 
   if (msg.owner === user) {
     newMsg.appendChild(deleteButton);
+  }
+  //---------seeing whether a message is from the sender or not
+  if (msg.owner === user) {
+    newMsg.classList.add("user-message");
+  } else {
+    newMsg.classList.add("other-message");
   }
   //-------------------------------------------------
   newMsg.appendChild(todoButton);

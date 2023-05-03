@@ -76,6 +76,7 @@
   min-height: 100vh;
   background-color: #cea5d1;
 }
+
 .main {
   display: flex;
 }
@@ -143,32 +144,51 @@ ul li {
   justify-content: center;
 }
 
-.placeholder-msg {
-  justify-content: center;
-  text-align: center;
-  margin-left: 400px;
-  margin: auto;
-}
-
-.placeholder-msg h2 {
-  color: #694e6b;
-  font-family: "Arizonia", cursive;
-  font-size: 3.5rem;
-  cursor: default;
-  margin-top: 240px;
-  margin-left: 110px;
-  text-align: center;
-  justify-content: center;
-}
-
-h2:hover {
-  color: #472f49;
-  transition: all 0.3s ease;
-}
-
 .chatroom {
-  display: flex;
-  text-align: center;
+  position: absolute;
+  width: 100%;
+  overflow: hidden;
+}
+.sendMessage {
+  position: relative;
+  height: 100px;
+  width: 100%;
+  overflow-y: auto;
+}
+
+#messages {
+  list-style-type: none;
+  padding: 0;
+  height: 450px;
+  max-height: 450px; 
+  overflow-y: auto; 
+  margin-top:4vh;
+  margin-left:10vh;
+  margin-right:0vh;
+}
+
+#messages li {
+  margin-bottom: 10px;
+  clear: both;
+  overflow: hidden;
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 1.6rem;
+  color: #362438;
+  font-size: 25px;
+  background-color: #cea5d1;
+  font-family: "Kalam", cursive;
+  font-weight: 550;
+}
+
+#messages li.user-message {
+  float: right;
+  background-color: #c0c7f2;
+}
+
+#messages li.other-message {
+  float: left;
+  background-color: #abb4ee;
 }
 
 input {
@@ -217,23 +237,6 @@ input {
   position: bottom;
 }
 
-#messages {
-  margin-bottom: 20px;
-  margin-left: 110px;
-  list-style: none;
-  list-style-position: inside;
-  overflow: hidden;
-  padding: 0;
-}
-
-#messages li {
-  color: #362438;
-  font-size: 25px;
-  background-color: #cea5d1;
-  font-family: "Kalam", cursive;
-  font-weight: 550;
-}
-
 #logout_btn {
   background: rgb(255, 255, 255);
   border: 2px solid rgb(255, 255, 255);
@@ -246,4 +249,27 @@ input {
   width: 150px;
   height: 50px;
   position: bottom;
+}
+
+.placeholder-msg {
+  justify-content: center;
+  text-align: center;
+  margin-left: 400px;
+  margin: auto;
+}
+
+.placeholder-msg h2 {
+  color: #694e6b;
+  font-family: "Arizonia", cursive;
+  font-size: 3.5rem;
+  cursor: default;
+  margin-top: 240px;
+  margin-left: 110px;
+  text-align: center;
+  justify-content: center;
+}
+
+h2:hover {
+  color: #472f49;
+  transition: all 0.3s ease;
 }
