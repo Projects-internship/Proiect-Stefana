@@ -139,19 +139,29 @@ async function getChatrooms() {
             deleteButton.style.background = "transparent";
             deleteButton.style.border = "none";
             deleteButton.style.width = "30px";
-            deleteButton.style.height = "30px";
+            deleteButton.style.height = "40px";
             deleteButton.style.cursor = "pointer";
+            deleteButton.style.fontWeight="bold";
             deleteButton.innerHTML = " X ";
 
             //-----------ADD MSG TO TO-DO LIST----------------
             const todoButton = document.createElement("button");
             todoButton.className = "addButton";
+            todoButton.id="todoButton";
             todoButton.style.background = "transparent";
             todoButton.style.border = "none";
             todoButton.style.width = "30px";
             todoButton.style.height = "30px";
             todoButton.style.cursor = "pointer";
             todoButton.innerHTML = " ➤ ";
+
+            const feedback = document.querySelector('.todo-feedback');
+            todoButton.addEventListener('click', function(e) {
+            feedback.innerText = "Item added to your to-do list!";
+            setTimeout(function() {
+              feedback.innerText = "";
+            }, 2000);
+          });
 
             const newMsg = document.createElement("li");
             const ownerSpan = document.createElement("span");
@@ -249,21 +259,11 @@ for (let i = 0; i < list.length; i++) {
   btn.style.background = "transparent";
   btn.style.border = "none";
   btn.style.width = "30px";
-  btn.style.height = "30px";
+  btn.style.height = "40px";
   btn.style.cursor = "pointer";
+  btn.style.fontWeight="bold";
   btn.style.color = "white";
   list[i].appendChild(btn).innerText = " X ";
-
-  //edit button / options
-  const btn2 = document.createElement("button");
-  btn2.className = "closeButton";
-  btn2.style.background = "transparent";
-  btn2.style.border = "none";
-  btn2.style.width = "30px";
-  btn2.style.height = "30px";
-  btn2.style.cursor = "pointer";
-  btn2.style.color = "white";
-  list[i].appendChild(btn2).innerText = " ⋮ ";
 }
 
 //---------chat---------
@@ -274,19 +274,29 @@ socket.on("chat client", function (msg) {
   deleteButton.style.background = "transparent";
   deleteButton.style.border = "none";
   deleteButton.style.width = "30px";
-  deleteButton.style.height = "30px";
+  deleteButton.style.height = "40px";
   deleteButton.style.cursor = "pointer";
+  deleteButton.style.fontWeight="bold";
   deleteButton.innerHTML = " X ";
 
   //-----------ADD MSG TO TO-DO LIST----------------
   const todoButton = document.createElement("button");
-  todoButton.className = "deleteButton";
+  todoButton.className = "addButton";
+  todoButton.id="todoButton";
   todoButton.style.background = "transparent";
   todoButton.style.border = "none";
   todoButton.style.width = "30px";
   todoButton.style.height = "30px";
   todoButton.style.cursor = "pointer";
   todoButton.innerHTML = " ➤ ";
+
+  const feedback = document.querySelector('.todo-feedback');
+  todoButton.addEventListener('click', function(e) {
+  feedback.innerText = "Item added to your to-do list!";
+  setTimeout(function() {
+    feedback.innerText = "";
+  }, 2000);
+});
 
   console.log("Mesaj primit");
   const newMsg = document.createElement("li");
@@ -370,7 +380,7 @@ socket.on("messageDeleted", function (data) {
 const searchBar=document.getElementById('chatSearch');
 searchBar.addEventListener("input",function(e){
     const searchString=e.target.value.toLowerCase();
-    const groupchat=document.querySelectorAll('li');
+    const groupchat=document.querySelectorAll('#chats li');
     const groupchatArray=Array.from(groupchat);
     groupchatArray.forEach(function(groupchat){
         const groupName=groupchat.textContent;
@@ -381,3 +391,5 @@ searchBar.addEventListener("input",function(e){
         }
     })
 })  
+
+

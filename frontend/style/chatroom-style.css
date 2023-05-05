@@ -273,3 +273,20 @@ h2:hover {
   color: #472f49;
   transition: all 0.3s ease;
 }
+
+#chats li:hover {
+  color: #330033;
+  font-weight: 600;
+}
+
+.addButton:active {
+  color: #59618f;
+}
+
+.todo-feedback{
+  color:#362438;
+  text-align: center;
+  font-size: 1.8rem;
+  font-weight: 500;
+  font-family: "Arizonia", cursive;
+}

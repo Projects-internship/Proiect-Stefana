@@ -219,7 +219,6 @@ app.get("/userProfile", routeProtection, (req, res) => {
   res.status(200).sendFile(__dirname + "/frontend/html/userProfile.html");
 });
 
-
 app.post("/get-user-data", async (req, res) => {
   const user = req.cookies.userCookie;
 
