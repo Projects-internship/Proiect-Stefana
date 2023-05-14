@@ -105,9 +105,11 @@
   margin-left: 20px;
   width: 60%;
   height: 60%;
-  border-radius: 10px;
+  border-radius: 7px;
   padding: 20px;
   box-shadow: 0 7px 20px 0 rgba(0, 0, 0, 0.4), 0 7px 20px 0 rgba(0, 0, 0, 0.2);
+  height: 65vh;
+  overflow-y: auto;  
 }
 
 @media (min-width: 800px) {
@@ -133,6 +135,7 @@ ul li {
   min-width: 20vh;
   margin: 5px;
   text-align: center;
+
 }
 
 #user-search-form {

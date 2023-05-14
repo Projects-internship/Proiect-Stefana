@@ -1,36 +1,46 @@
-function createChat(){
+function createChat() {
     const chatName = document.getElementById('chat-name').value;
-    fetch(`/create-groupchat/${chatName}`, {
-        method: "PUT",
-        headers: {
-            "Content-Type": "application/json"
+    //validation
+    fetch(`/check-groupchat/${chatName}`)
+      .then(response => response.json())
+      .then(data => {
+        if (data.error) {
+          // creation
+          fetch(`/create-groupchat/${chatName}`, {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json"
             },
-            body: JSON.stringify({chatName})
-            })
+            body: JSON.stringify({ chatName })
+          })
             .then(response => response.json())
             .then(data => {
-                if(data.affectedRows>0){
-                const placeholder=document.querySelector(".placeholder-chat");
-                placeholder.innerHTML = "Groupchat created!";
+              if (data.affectedRows > 0) {
+                const placeholder = document.querySelector(".placeholder-chat");
+                placeholder.innerHTML = "Group chat created!";
                 setTimeout(hideElement, 2000);
                 
                 function hideElement() {
-                    placeholder.innerHTML = "";
-                    }
-
+                  placeholder.innerHTML = "";
+                }
+                
                 const chatroomsList = document.querySelector("#chats");
                 const listItem = document.createElement("li");
                 listItem.textContent = chatName;
-                listItem.id=chatName;
+                listItem.id = chatName;
                 chatroomsList.appendChild(listItem);
-                }
-                else{
-                const placeholder=document.querySelector(".placeholder-chat");
-                placeholder.innerHTML = "Groupchat could not be created!";
-                }
+              } else {
+                const placeholder = document.querySelector(".placeholder-chat");
+                placeholder.innerHTML = "Group chat could not be created!";
+              }
             });
+        } else {
+          const placeholder = document.querySelector(".placeholder-chat");
+          placeholder.innerHTML = "Group chat already exists!";
+        }
+      });
 }
-
+  
 function addUserToGroup(){
     const chatName = document.getElementById('user-chat-name').value;
     const userName = document.getElementById('user-name').value;

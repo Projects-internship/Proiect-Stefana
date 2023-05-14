@@ -706,6 +706,25 @@ app.post("/get-all-groupchats", async (req, res) => {
   });
 });
 
+app.get("/check-groupchat/:groupName", async (req, res) => {
+  const groupName = req.params.groupName;
+  db.query(
+    "SELECT * FROM `groupchat` WHERE `groupname` = ?",
+    [groupName],
+    (err, result) => {
+      if (err) {
+        res.json({ error: err });
+      } else if (result.length > 0) {
+        res.json(result);
+      } else {
+        res.json({ error: "No groupchats found!" });
+      }
+    }
+  );
+});
+
+
+
 //----------------get all users----------------
 app.post("/get-all-users", async (req, res) => {
   db.query("SELECT * FROM `users`", (err, result) => {
