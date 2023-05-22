@@ -78,7 +78,7 @@
 }
 
 #logout_btn {
-  background: rgb(255, 255, 255);
+  background: #ffffff;
   border: 2px solid rgb(255, 255, 255);
   outline: none;
   border-radius: 2px;
@@ -86,18 +86,21 @@
   font-size: 1em;
   color: rgb(46, 28, 70);
   font-weight: 525;
-  width: 150px;
-  height: 50px;
+  width: 100px;
+  height: 40px;
   position: bottom;
 }
 
 /* -------------------------------------------- */
 .main h1 {
-  font-size: 2.3rem;
   font-weight: 600;
-  color: #472f49;
   text-align: center;
   padding: 10px;
+  font-family: "Amatic SC", cursive;
+  font-size: 3rem;
+  color: rgb(255, 255, 255);
+  user-select: none;
+  letter-spacing: 5px;
 }
 
 .users-container {

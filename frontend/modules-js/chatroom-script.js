@@ -64,6 +64,7 @@ async function getChatrooms() {
       form.setAttribute('id', 'myform');
       
       const input = document.createElement('input');
+      input.setAttribute('id', 'chatinput');
       input.setAttribute('type', 'text');
       input.setAttribute('name', 'message');
       input.setAttribute('placeholder', 'Type your message here...');

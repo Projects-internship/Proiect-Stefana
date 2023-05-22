@@ -5,6 +5,18 @@
   font-family: "Times New Roman", Times, serif;
 }
 
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 20px 100px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 99;
+}
+
 #header2 {
   position: sticky;
   top: 0;
@@ -90,8 +102,8 @@
   font-size: 1em;
   color: rgb(46, 28, 70);
   font-weight: 525;
-  width: 150px;
-  height: 50px;
+  width: 100px;
+  height: 40px;
   position: bottom;
 }
 
@@ -108,9 +120,10 @@
 }
 
 .panel h1{
-  font-family: "Arizonia", cursive;
-  font-size: 3.5rem;
-  font-weight: 100;
+  font-family: "Amatic SC", cursive;
+  letter-spacing: 5px;
+  font-size: 3rem;
+  font-weight: 600;
   max-height: 100%;
   color: rgb(255, 255, 255);
   user-select: none;

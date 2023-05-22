@@ -317,9 +317,9 @@ ul li {
 .TODO h1 {
   font-family: "Amatic SC", cursive;
   position: center;
-  font-size: 2.5rem;
+  font-size: 3rem;
   color: #fff;
-  letter-spacing: 0.3rem;
+  letter-spacing: 5px;
   padding:20px;
 }
 
@@ -332,8 +332,8 @@ ul li {
   font-size: 1em;
   color: rgb(46, 28, 70);
   font-weight: 525;
-  width: 150px;
-  height: 50px;
+  width: 100px;
+  height: 40px;
   position:bottom;
 }
 

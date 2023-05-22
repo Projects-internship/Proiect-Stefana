@@ -78,15 +78,17 @@
 }
 
 .username {
-  font-size: 2.4rem;
-  font-weight: 700;
+  font-family:"Amatic SC", cursive;
+  font-size: 3rem;
+  font-weight: 600;
+  letter-spacing: 5px; 
   max-height: 100%;
   color: azure;
   user-select: none;
   text-decoration: none;
   text-align: center;
-  letter-spacing: 3px;
   padding: 30px;
+  text-shadow: #e8b9ec 1px 0 6px;
 }
 
 ul li {
@@ -215,7 +217,7 @@ ul li {
   font-size: 1em;
   color: rgb(46, 28, 70);
   font-weight: 525;
-  width: 150px;
-  height: 50px;
+  width: 100px;
+  height: 40px;
   position: bottom;
 }

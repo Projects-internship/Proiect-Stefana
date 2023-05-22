@@ -32,11 +32,20 @@ function createChat() {
               } else {
                 const placeholder = document.querySelector(".placeholder-chat");
                 placeholder.innerHTML = "Group chat could not be created!";
+
+                setTimeout(hideElement, 2000); 
+                function hideElement() {
+                placeholder.innerHTML = "";
+                }
               }
             });
         } else {
           const placeholder = document.querySelector(".placeholder-chat");
           placeholder.innerHTML = "Group chat already exists!";
+          setTimeout(hideElement, 2000); 
+            function hideElement() {
+                placeholder.innerHTML = "";
+                }
         }
       });
 }
@@ -65,6 +74,10 @@ function addUserToGroup(){
         else{
             const placeholder=document.querySelector(".placeholder-user");
             placeholder.innerHTML = "User could not be added!";
+            setTimeout(hideElement, 2000); 
+            function hideElement() {
+                placeholder.innerHTML = "";
+                }
         }
     });
 }
@@ -96,6 +109,10 @@ function deleteGroupChat(){
         else{
             const placeholder=document.querySelector(".placeholder-delete-chat");
             placeholder.innerHTML = "Groupchat could not be deleted!";
+            setTimeout(hideElement, 2000); 
+            function hideElement() {
+                placeholder.innerHTML = "";
+                }
         }
     });
 }
@@ -124,6 +141,10 @@ function deleteUser(){
         else{
             const placeholder=document.querySelector(".placeholder-delete-user");
             placeholder.innerHTML = "User could not be deleted!";
+            setTimeout(hideElement, 2000);
+            function hideElement() {
+                placeholder.innerHTML = "";
+                }
         }
     });
 }
